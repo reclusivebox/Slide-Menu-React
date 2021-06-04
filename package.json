@@ -1,0 +1,49 @@
+{
+  "name": "slide-menu",
+  "version": "0.0.1",
+  "description": "A react component to implement the famous slide-from-the-side menu, used in most native mobile applications.",
+  "main": "index.js",
+  "author": "Bruno Gregório",
+  "license": "MIT",
+  "private": false,
+  "files": [
+    "dist/*",
+    "README.md"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@storybook/addon-actions": "^6.2.9",
+    "@storybook/addon-essentials": "^6.2.9",
+    "@storybook/addon-links": "^6.2.9",
+    "@storybook/react": "^6.2.9",
+    "@types/react": "^17.0.9",
+    "@typescript-eslint/eslint-plugin": "^4.26.0",
+    "@typescript-eslint/parser": "^4.26.0",
+    "babel-loader": "^8.2.2",
+    "builtin-modules": "^3.2.0",
+    "eslint": "^7.27.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "postcss": "^8.3.0",
+    "prettier": "^2.3.0",
+    "rollup": "^2.50.6",
+    "rollup-plugin-node-externals": "^2.2.0",
+    "rollup-plugin-postcss": "^4.0.0",
+    "rollup-plugin-typescript2": "^0.30.0",
+    "sass": "^1.34.1",
+    "typescript": "^4.3.2"
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "scripts": {
+    "build": "rollup -c rollup.config.js",
+    "clean": "rm dist/*",
+    "storybook": "rollup --watch -c rollup.config.js & start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  }
+}
