@@ -1,0 +1,30 @@
+:root {
+    --custom-sensible-area: 50px;
+    --left-border: 0px;
+}
+
+.verticalScrollCreator {
+    width: 50vw;
+    box-sizing: content-box;
+    border-top: solid 60vh cyan;
+    background-color: orange;
+    height: 60vh;
+}
+
+.horizontalScrollCreator {
+    height: 50vh;
+    box-sizing: content-box;
+    border-left: solid 60vh cyan;
+    background-color: orange;
+    width: 60vh;
+}
+
+.horizontalSpacer {
+    width: 50vw;
+    height: 1px;
+}
+
+.verticalSpacer {
+    height: 50vh;
+    width: 1px;
+}

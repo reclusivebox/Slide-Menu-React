@@ -2,6 +2,8 @@
 import React from 'react';
 import SlideMenu from '../../dist/SlideMenu';
 
+import './testStyle.css';
+
 export default {
   title: 'Basic Usage',
   component: SlideMenu,
@@ -10,7 +12,33 @@ export default {
 export function BasicStory() {
   return (
     <>
-      <SlideMenu />
+      <SlideMenu>
+        <div className="horizontalSpacer" />
+        <div className="verticalScrollCreator" />
+      </SlideMenu>
+    </>
+  );
+}
+
+export function BodyYScroll() {
+  return (
+    <>
+      <SlideMenu>
+        <div className="verticalScrollCreator" />
+      </SlideMenu>
+      <div className="verticalScrollCreator" />
+    </>
+  );
+}
+
+export function BodyXScroll() {
+  return (
+    <>
+      <SlideMenu>
+        <div className="horizontalSpacer" />
+        <div className="verticalScrollCreator" />
+      </SlideMenu>
+      <div className="horizontalScrollCreator" />
     </>
   );
 }

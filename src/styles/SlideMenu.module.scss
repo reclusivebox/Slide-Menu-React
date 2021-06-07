@@ -1,3 +1,46 @@
-.change {
-    color: blue;
+:root {
+  --slide-menu-topbar-height: 50px;
+  --slide-menu-grid:
+    'menu placeholder' var(--slide-menu-topbar-height)
+    'menu .' calc(100vh - var(--slide-menu-topbar-height))
+    / auto 100vw;
+}
+
+.menuGrid {
+  position: fixed;
+  display: grid;
+  grid-template: var(--slide-menu-grid);
+  height: 100vh;
+  width: 100vw;
+  overflow: auto;
+  scroll-snap-type: x mandatory;
+
+  // Debug Props
+  // background-color: yellow;
+
+  .menuContainer {
+    grid-area: menu;
+    overflow: auto;
+    scroll-snap-align: start;
+    height: 100vh;
+    width: fit-content;
+
+    // Debug Props
+    background-color: gray;
+  }
+
+  .placeholder {
+    grid-area: placeholder;
+    width: 100%;
+    scroll-snap-align: center;
+
+    // Debug Props
+    height: 10px;
+    background-color: red;
+  }
+
+  .backdrop {
+    grid-area: backdrop;
+    display: none;
+  }
 }
