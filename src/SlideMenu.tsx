@@ -20,7 +20,7 @@ export default function SlideMenu({ children }: SlideMenuProps) {
   //   </div>
   // );
   return (
-    <div className={styles.menuGrid} tabIndex={-1}>
+    <div className={styles.menuGrid}>
       <div className={styles.menuContainer}>{children}</div>
       <div className={styles.placeholder} />
       <div className={styles.backdrop} />
