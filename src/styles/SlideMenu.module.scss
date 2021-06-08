@@ -1,8 +1,8 @@
 :root {
-  --slide-menu-topbar-height: 50px;
+  --slide-menu-topbar-height: 1px;
   --slide-menu-grid:
     'menu placeholder' var(--slide-menu-topbar-height)
-    'menu .' calc(100vh - var(--slide-menu-topbar-height))
+    'menu backdrop' calc(100vh - var(--slide-menu-topbar-height))
     / auto 100vw;
 }
 
@@ -41,6 +41,12 @@
 
   .backdrop {
     grid-area: backdrop;
+    z-index: -305;
+    width: 100%;
+    height: 100%;
+    background-color: black;
     display: none;
+    transition: opacity 0.5s;
+    touch-action: none;
   }
 }
