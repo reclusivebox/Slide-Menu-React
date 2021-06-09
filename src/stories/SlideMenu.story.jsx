@@ -3,6 +3,7 @@ import React from 'react';
 import SlideMenu from '../../dist/SlideMenu';
 
 import './testStyle.css';
+import '../../node_modules/normalize.css/normalize.css';
 
 export default {
   title: 'Basic Usage',
