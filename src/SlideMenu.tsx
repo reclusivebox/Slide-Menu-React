@@ -18,25 +18,21 @@ function usePositionAjuster(ref: React.MutableRefObject<null>) {
 
 function useOpacityAjuster(
   menuRef: React.MutableRefObject<null>,
-  backdropID: string,
+  backdropRef: React.MutableRefObject<null>,
 ) {
   function callback(entries: IntersectionObserverEntry[]) {
-    const backdrop = document.getElementById(backdropID) as HTMLElement;
+    const backdrop = backdropRef.current as unknown as HTMLElement;
     const showRatio = entries[0].intersectionRatio;
 
     if (showRatio > 0.9) {
+      backdrop.style.height = '100vh';
       setTimeout(() => {
-        if (entries[0].target.scrollLeft < 10) {
-          backdrop.style.display = 'block';
-          setTimeout(() => {
-            backdrop.style.opacity = '0.5';
-          }, 100);
-        }
+        backdrop.style.opacity = '0.5';
       }, 100);
     } else if (showRatio < 0.1) {
-      backdrop.style.opacity = '0';
+      backdrop.style.opacity = '0.01';
       setTimeout(() => {
-        backdrop.style.display = 'none';
+        backdrop.style.height = '0.1px';
       }, 500);
     }
   }
@@ -50,22 +46,26 @@ function useOpacityAjuster(
   }, []);
 }
 
+function disableEvent(event: React.SyntheticEvent) {
+  event.preventDefault();
+}
+
 export default function SlideMenu({ children }: SlideMenuProps) {
-  const placeholderRef = useRef(null);
+  const backdropRef = useRef(null);
   const menuRef = useRef(null);
   const [backdropID, setBackdropID] = useState(UUID());
 
-  usePositionAjuster(placeholderRef);
-  // useOpacityAjuster(menuRef, backdropID);
+  usePositionAjuster(backdropRef);
+  useOpacityAjuster(menuRef, backdropRef);
 
   return (
-    <div className={styles.menuGrid}>
-      <div className={styles.menuContainer} ref={menuRef}>
-        <div className={styles.menuContent}>
+    <div className={styles.menuGrid} onPointerMove={disableEvent}>
+      <div className={styles.menuContainer}>
+        <div className={styles.menuContent} ref={menuRef}>
           {children}
         </div>
       </div>
-      <div className={styles.backdrop} id={backdropID} ref={placeholderRef} />
+      <div className={styles.backdrop} id={backdropID} ref={backdropRef} />
     </div>
   );
 }

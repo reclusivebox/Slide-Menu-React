@@ -1,5 +1,6 @@
 :root {
-  --slide-menu-topbar-height: 10px;
+  --slide-menu-topbar-height: 0.1px;
+  --slide-menu-sensible-area: 10vw;
   --slide-menu-grid: 'menu placeholder' var(--slide-menu-topbar-height)
     'menu backdrop' calc(100vh - var(--slide-menu-topbar-height)) / auto 100vw;
 }
@@ -17,12 +18,16 @@
 
   // Display stuff
   display: grid;
-  grid-template: "menu backdrop" 100vh / auto 100vw;
+  grid-template: "menu backdrop" 100vh / auto calc(100vw - var(--slide-menu-sensible-area));
 
   .menuContainer {
     grid-area: menu;
     scroll-snap-align: start;
     height: 100%;
+
+    // border stuff
+    box-sizing: content-box;
+    border-right: solid red var(--slide-menu-sensible-area);
 
     .menuContent {
       height: 100%;
@@ -34,8 +39,11 @@
 
   .backdrop {
     height: var(--slide-menu-topbar-height);
-    background-color: red;
+    background-color: black;
     width: 100%;
+    opacity: 0.01;
+    transition: opacity 0.5s;
     scroll-snap-align: center;
+    touch-action: none;
   }
 }
