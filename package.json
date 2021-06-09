@@ -17,7 +17,6 @@
     "@storybook/addon-links": "^6.2.9",
     "@storybook/react": "^6.2.9",
     "@types/react": "^17.0.9",
-    "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.26.0",
     "@typescript-eslint/parser": "^4.26.0",
     "babel-loader": "^8.2.2",
@@ -28,6 +27,7 @@
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "normalize.css": "^8.0.1",
     "postcss": "^8.3.0",
     "prettier": "^2.3.0",
     "rollup": "^2.50.6",
@@ -39,8 +39,7 @@
   },
   "dependencies": {
     "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "uuid": "^8.3.2"
+    "react-dom": "^17.0.2"
   },
   "scripts": {
     "build": "rollup -c rollup.config.js",

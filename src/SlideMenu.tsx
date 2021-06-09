@@ -1,6 +1,5 @@
 // eslint-disable-next-line no-use-before-define
-import React, { useRef, useEffect, useState } from 'react';
-import { v4 as UUID } from 'uuid';
+import React, { useRef, useEffect } from 'react';
 import styles from './styles/SlideMenu.module.scss';
 
 type SlideMenuProps = React.PropsWithChildren<{}>;
@@ -53,7 +52,6 @@ function disableEvent(event: React.SyntheticEvent) {
 export default function SlideMenu({ children }: SlideMenuProps) {
   const backdropRef = useRef(null);
   const menuRef = useRef(null);
-  const [backdropID, setBackdropID] = useState(UUID());
 
   usePositionAjuster(backdropRef);
   useOpacityAjuster(menuRef, backdropRef);
@@ -65,7 +63,7 @@ export default function SlideMenu({ children }: SlideMenuProps) {
           {children}
         </div>
       </div>
-      <div className={styles.backdrop} id={backdropID} ref={backdropRef} />
+      <div className={styles.backdrop} ref={backdropRef} />
     </div>
   );
 }
