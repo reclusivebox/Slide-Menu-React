@@ -14,6 +14,7 @@
   width: 100vw;
   overflow: auto;
   scroll-snap-type: x mandatory;
+  z-index: 2000;
 
   // Debug Props
   // background-color: yellow;
@@ -41,7 +42,6 @@
 
   .backdrop {
     grid-area: backdrop;
-    z-index: -305;
     width: 100%;
     height: 100%;
     background-color: black;

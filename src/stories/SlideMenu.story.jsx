@@ -26,7 +26,7 @@ export function BodyYScroll() {
       <SlideMenu>
         <div className="verticalScrollCreator" />
       </SlideMenu>
-      <div className="verticalScrollCreator" />
+      <div className="verticalScrollCreator shiftRight" />
     </>
   );
 }

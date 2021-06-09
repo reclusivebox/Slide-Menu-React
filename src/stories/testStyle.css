@@ -20,3 +20,8 @@
     background-color: orange;
     width: 60vw;
 }
+
+.shiftRight {
+    position: relative;
+    left: 50px;
+}

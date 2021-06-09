@@ -22,11 +22,13 @@ function useOpacityAjuster(
   function callback(entries: IntersectionObserverEntry[]) {
     const backdrop = (backdropRef.current as unknown as HTMLElement);
     const showRatio = entries[0].intersectionRatio;
-    backdrop.style.opacity = `${showRatio / 2}`;
 
-    if (showRatio > 0.1 && showRatio < 0.2 && entries[0].isIntersecting) {
+    if (showRatio > 0.9) {
       backdrop.style.display = 'block';
-    } else if (showRatio < 0.2 && !(entries[0].isIntersecting)) {
+      setTimeout(() => {
+        backdrop.style.opacity = '0.5';
+      }, 100);
+    } else if (showRatio < 0.1) {
       backdrop.style.opacity = '0';
       setTimeout(() => {
         backdrop.style.display = 'none';
@@ -36,7 +38,7 @@ function useOpacityAjuster(
 
   useEffect(() => {
     const observer = new IntersectionObserver(callback, {
-      threshold: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
+      threshold: [0.1, 0.9],
     });
 
     observer.observe((menuRef.current as unknown as HTMLElement));
