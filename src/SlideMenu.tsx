@@ -4,9 +4,9 @@ import { usePositionAjuster, useToggleEffect } from './hooks';
 
 import styles from './styles/SlideMenu.module.scss';
 
-type SlideMenuProps = React.PropsWithChildren<{}>;
+type SlideMenuProps = React.PropsWithChildren<{ className?: string, style?: React.CSSProperties }>;
 
-export default function SlideMenu({ children }: SlideMenuProps) {
+export default function SlideMenu({ children, className, style }: SlideMenuProps) {
   const backdropRef = useRef(null);
   const menuRef = useRef(null);
   const menuContainerRef = useRef(null);
@@ -46,16 +46,22 @@ export default function SlideMenu({ children }: SlideMenuProps) {
   };
 
   usePositionAjuster(backdropRef);
-  useToggleEffect(menuRef, [showBackdrop, hideBorder], [hideBackdrop, resetBorder]);
+  useToggleEffect(
+    menuRef,
+    [showBackdrop, hideBorder],
+    [hideBackdrop, resetBorder],
+  );
 
   return (
-    <div className={styles.menuGrid}>
-      <div className={styles.menuContainer} ref={menuContainerRef}>
-        <div className={styles.menuContent} ref={menuRef}>
-          {children}
+    <div className={className} style={style}>
+      <div className={styles.menuGrid}>
+        <div className={styles.menuContainer} ref={menuContainerRef}>
+          <div className={styles.menuContent} ref={menuRef}>
+            {children}
+          </div>
         </div>
+        <div className={styles.backdrop} ref={backdropRef} />
       </div>
-      <div className={styles.backdrop} ref={backdropRef} />
     </div>
   );
 }

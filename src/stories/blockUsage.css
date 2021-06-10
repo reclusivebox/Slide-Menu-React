@@ -1,0 +1,17 @@
+.verticalScrollCreator {
+    width: 50vw;
+    box-sizing: content-box;
+    border-top: solid 60vh cyan;
+    border-right: solid 10vw black;
+    background-color: orange;
+    height: 60vh;
+}
+
+.horizontalScrollCreator {
+    height: 50vh;
+    box-sizing: content-box;
+    border-left: solid 60vw cyan;
+    border-top: solid 10vh black;
+    background-color: orange;
+    width: 60vw;
+}
