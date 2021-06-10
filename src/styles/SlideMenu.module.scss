@@ -43,7 +43,7 @@
     width: 100%;
     opacity: 0.01;
     transition: opacity 0.5s;
-    scroll-snap-align: center;
+    scroll-snap-align: end;
     touch-action: none;
   }
 }
