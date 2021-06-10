@@ -1,43 +1,10 @@
 // eslint-disable-next-line no-use-before-define
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
+import { usePositionAjuster, useToggleEffect } from './hooks';
+
 import styles from './styles/SlideMenu.module.scss';
 
 type SlideMenuProps = React.PropsWithChildren<{}>;
-
-/**
- * React Hook to ajust the menu position on render
- */
-function usePositionAjuster(ref: React.MutableRefObject<null>) {
-  useEffect(() => {
-    (ref.current as unknown as Element).scrollIntoView({
-      inline: 'center',
-    });
-  }, []);
-}
-
-function useToggleEffect(
-  menuRef: React.MutableRefObject<null>,
-  activationCallbacks: Function[] = [],
-  deactivationCallbacks: Function[] = [],
-) {
-  function observerCallback(entries: IntersectionObserverEntry[]) {
-    const showRatio = entries[0].intersectionRatio;
-
-    if (showRatio > 0.9) {
-      activationCallbacks.forEach((callback) => callback());
-    } else if (showRatio < 0.1) {
-      deactivationCallbacks.forEach((callback) => callback());
-    }
-  }
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(observerCallback, {
-      threshold: [0.1, 0.9],
-    });
-
-    observer.observe(menuRef.current as unknown as HTMLElement);
-  }, []);
-}
 
 export default function SlideMenu({ children }: SlideMenuProps) {
   const backdropRef = useRef(null);

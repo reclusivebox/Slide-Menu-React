@@ -5,45 +5,49 @@
     'menu backdrop' calc(100vh - var(--slide-menu-topbar-height)) / auto 100vw;
 }
 
-.menuGrid {
-  // Immutable
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  box-sizing: border-box;
-  overflow: auto;
-  scroll-snap-type: x mandatory;
-  z-index: 2000;
-  scrollbar-width: none;
+@media screen and (max-width: 576px) {
+  .menuGrid {
+    // Immutable
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+    overflow: auto;
+    scroll-snap-type: x mandatory;
+    z-index: 2000;
+    scrollbar-width: none;
 
-  // Display stuff
-  display: grid;
-  grid-template: "menu backdrop" 100vh / auto calc(100vw - var(--slide-menu-sensible-area));
+    // Display stuff
+    display: grid;
+    grid-template: 'menu backdrop' 100vh / auto calc(
+        100vw - var(--slide-menu-sensible-area)
+      );
 
-  .menuContainer {
-    grid-area: menu;
-    scroll-snap-align: start;
-    height: 100%;
-
-    // border stuff
-    box-sizing: content-box;
-    border-right: solid red var(--slide-menu-sensible-area);
-
-    .menuContent {
+    .menuContainer {
+      grid-area: menu;
+      scroll-snap-align: start;
       height: 100%;
-      max-width: 100vw;
-      overflow: auto;
-      scrollbar-width: none;
-    }
-  }
 
-  .backdrop {
-    height: var(--slide-menu-topbar-height);
-    background-color: black;
-    width: 100%;
-    opacity: 0.01;
-    transition: opacity 0.5s;
-    scroll-snap-align: end;
-    touch-action: none;
+      // border stuff
+      box-sizing: content-box;
+      border-right: solid red var(--slide-menu-sensible-area);
+
+      .menuContent {
+        height: 100%;
+        max-width: 100vw;
+        overflow: auto;
+        scrollbar-width: none;
+      }
+    }
+
+    .backdrop {
+      height: var(--slide-menu-topbar-height);
+      background-color: black;
+      width: 100%;
+      opacity: 0.01;
+      transition: opacity 0.5s;
+      scroll-snap-align: end;
+      touch-action: none;
+    }
   }
 }
