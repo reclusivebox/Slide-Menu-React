@@ -2,11 +2,10 @@
 import React from 'react';
 import SlideMenu from '../../dist/SlideMenu';
 
-import './testStyle.css';
-import '../../node_modules/normalize.css/normalize.css';
+import './mobileUsage.css';
 
 export default {
-  title: 'Basic Usage',
+  title: 'Mobile Usage',
   component: SlideMenu,
 };
 
