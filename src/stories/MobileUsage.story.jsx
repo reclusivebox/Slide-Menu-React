@@ -42,3 +42,37 @@ export function BodyXScroll() {
     </>
   );
 }
+
+export function MenuFromTheRight() {
+  return (
+    <>
+      <SlideMenu border="right">
+        <div className="horizontalSpacer" />
+        <div className="verticalScrollCreator" />
+      </SlideMenu>
+    </>
+  );
+}
+
+export function NegativeZIndex() {
+  return (
+    <>
+      <SlideMenu zIndex="-2000">
+        <div className="horizontalSpacer" />
+        <div className="verticalScrollCreator" />
+      </SlideMenu>
+      <div className="horizontalScrollCreator" />
+    </>
+  );
+}
+
+export function TenPercentVisibleArea() {
+  return (
+    <>
+      <SlideMenu visibleArea="10">
+        <div className="horizontalSpacer" />
+        <div className="verticalScrollCreator" />
+      </SlideMenu>
+    </>
+  );
+}
