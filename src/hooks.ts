@@ -19,30 +19,69 @@ export function usePositionAjuster(ref: React.MutableRefObject<null>) {
   });
 }
 
+type UseToggleEffectOptions = {
+  onShowStart?: (() => void)[];
+  onShowEnd?: (() => void)[];
+  onHideStart?: (() => void)[];
+  onHideEnd?: (() => void)[];
+  visibleArea?: number;
+};
+
 /**
  * A react Hook to schedule callbacks to be ran when the menu is lauched or when it is hidden.
  * @param menuRef - The Ref for the actual menu (the one with the children).
- * @param activationCallbacks - A list of functions to be called when the menu is activated.
- * @param deactivationCallbacks - A list of functions to be called when the menu is deactivated.
+ * @param options - An object with the following options:
+ *  - `onShowStart: (() => void)[]`: A list os callbacks to be called when the menu
+ *     starts to be shown.
+ *  - `onShowEnd: (() => void)[]`: A list os callbacks to be called when the menu
+ *     is shown.
+ *  - `onHideStart: (() => void)[]`: A list os callbacks to be called when the menu
+ *     starts to be hidden.
+ *  - `onHideEnd: (() => void)[]`: A list os callbacks to be called when the menu
+ *     is hidden.
+ *  - `visibleArea`: The percentage of the screen the menu ocupies even when is
+ *    supposed to be hidden.
  */
 export function useToggleEffect(
   menuRef: React.MutableRefObject<null>,
-  activationCallbacks: Function[] = [],
-  deactivationCallbacks: Function[] = [],
+  {
+    onShowStart = [],
+    onShowEnd = [],
+    onHideStart = [],
+    onHideEnd = [],
+    visibleArea = 0,
+  }: UseToggleEffectOptions,
 ) {
+  const firstThreshold = 0.1 + visibleArea / 100;
+  const secondThreshold = firstThreshold + (1 - firstThreshold) ** (1 + 1 - firstThreshold);
   function observerCallback(entries: IntersectionObserverEntry[]) {
     const showRatio = entries[0].intersectionRatio;
 
-    if (showRatio > 0.9) {
-      activationCallbacks.forEach((callback) => callback());
-    } else if (showRatio < 0.1) {
-      deactivationCallbacks.forEach((callback) => callback());
+    if (
+      showRatio >= firstThreshold
+      && showRatio < secondThreshold
+      && entries[0].isIntersecting
+    ) {
+      onShowStart.forEach((callback) => callback());
+    } else if (showRatio >= secondThreshold && entries[0].isIntersecting) {
+      onShowEnd.forEach((callback) => callback());
+    } else if (
+      showRatio <= secondThreshold
+      && showRatio > firstThreshold
+      && !entries[0].isIntersecting
+    ) {
+      onHideStart.forEach((callback) => callback());
+    } else if (
+      showRatio <= firstThreshold
+      && !entries[0].isIntersecting
+    ) {
+      onHideEnd.forEach((callback) => callback());
     }
   }
 
   useMobileEffect(() => {
     const observer = new IntersectionObserver(observerCallback, {
-      threshold: [0.1, 0.9],
+      threshold: [firstThreshold, secondThreshold],
     });
 
     observer.observe(menuRef.current as unknown as HTMLElement);

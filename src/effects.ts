@@ -1,23 +1,19 @@
 import type { MutableRefObject } from 'react';
 
 // Backdrop effects
-export function showBackdrop(backdropRef: MutableRefObject<null>) {
+export function showShadow(gridRef: MutableRefObject<null>) {
   return () => {
-    const backdrop = backdropRef.current as unknown as HTMLElement;
-    backdrop.style.height = '100vh';
+    const grid = gridRef.current as unknown as HTMLElement;
     setTimeout(() => {
-      backdrop.style.opacity = '0.5';
+      grid.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
     }, 100);
   };
 }
 
-export function hideBackdrop(backdropRef: MutableRefObject<null>) {
+export function hideShadow(gridRef: MutableRefObject<null>) {
   return () => {
-    const backdrop = backdropRef.current as unknown as HTMLElement;
-    backdrop.style.opacity = '0.01';
-    setTimeout(() => {
-      backdrop.style.height = '0.1px';
-    }, 500);
+    const grid = gridRef.current as unknown as HTMLElement;
+    grid.style.backgroundColor = 'rgba(0, 0, 0, 0)';
   };
 }
 
