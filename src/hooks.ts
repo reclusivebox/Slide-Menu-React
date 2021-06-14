@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 function useMobileEffect(callback: Function) {
   const isMobile = window.matchMedia('screen and (max-width: 576px)');
@@ -54,28 +54,46 @@ export function useToggleEffect(
 ) {
   const firstThreshold = 0.1 + visibleArea / 100;
   const secondThreshold = firstThreshold + (1 - firstThreshold) ** (1 + 1 - firstThreshold);
+
+  const activeRef = useRef(false);
+
   function observerCallback(entries: IntersectionObserverEntry[]) {
     const showRatio = entries[0].intersectionRatio;
 
+    // showStart
     if (
       showRatio >= firstThreshold
       && showRatio < secondThreshold
-      && entries[0].isIntersecting
+      && !activeRef.current
     ) {
       onShowStart.forEach((callback) => callback());
-    } else if (showRatio >= secondThreshold && entries[0].isIntersecting) {
+    } else
+
+    // showEnd
+    if (
+      showRatio >= secondThreshold
+      && !activeRef.current
+    ) {
       onShowEnd.forEach((callback) => callback());
-    } else if (
+      activeRef.current = true;
+    } else
+
+    // hideStart
+    if (
       showRatio <= secondThreshold
       && showRatio > firstThreshold
-      && !entries[0].isIntersecting
+      && activeRef.current
     ) {
       onHideStart.forEach((callback) => callback());
-    } else if (
+    } else
+
+    // hideEnd
+    if (
       showRatio <= firstThreshold
-      && !entries[0].isIntersecting
+      && activeRef.current
     ) {
       onHideEnd.forEach((callback) => callback());
+      activeRef.current = false;
     }
   }
 

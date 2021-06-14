@@ -39,7 +39,7 @@ export default function SlideMenu({
   // useToggleEffect(menuRef, [showShadow(gridRef)], [hideShadow(gridRef)]);
   useToggleEffect(menuRef, {
     visibleArea,
-    onShowEnd: [showShadow(gridRef), () => console.log('working')],
+    onShowEnd: [showShadow(gridRef)],
     onHideEnd: [hideShadow(gridRef)],
   });
 
