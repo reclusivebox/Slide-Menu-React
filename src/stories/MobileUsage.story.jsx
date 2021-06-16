@@ -43,17 +43,6 @@ export function BodyXScroll() {
   );
 }
 
-export function MenuFromTheRight() {
-  return (
-    <>
-      <SlideMenu border="right">
-        <div className="horizontalSpacer" />
-        <div className="verticalScrollCreator" />
-      </SlideMenu>
-    </>
-  );
-}
-
 export function NegativeZIndex() {
   return (
     <>

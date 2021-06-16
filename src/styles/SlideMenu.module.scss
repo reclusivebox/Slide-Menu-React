@@ -16,7 +16,7 @@
 
     // Display stuff
     display: grid;
-    grid-template: var(--slide-menu-grid);
+    grid-template: "menu backdrop" 100vh / auto calc(100vw - var(--slide-menu-visible-area, 0px));
 
     .menuContainer {
       grid-area: menu;

@@ -6,21 +6,11 @@ import { showShadow, hideShadow } from './effects';
 import styles from './styles/SlideMenu.module.scss';
 
 type SlideMenuProps = React.PropsWithChildren<{
-  border: 'left' | 'right';
   visibleArea: number;
   zIndex?: number;
   className?: string;
   style?: React.CSSProperties;
 }>;
-
-const RIGHT_MENU_SETTINGS = {
-  '--slide-menu-grid':
-    '"backdrop menu" 100vh / calc(100vw - var(--slide-menu-visible-area, 0px)) auto',
-};
-
-const LEFT_MENU_SETTINGS = {
-  '--slide-menu-grid': '"menu backdrop" 100vh / auto calc(100vw - var(--slide-menu-visible-area, 0px))',
-};
 
 export default function SlideMenu({
   children,
@@ -28,7 +18,6 @@ export default function SlideMenu({
   style,
   visibleArea = 0,
   zIndex = 2000,
-  border = 'left',
 }: SlideMenuProps) {
   const backdropRef = useRef(null);
   const menuRef = useRef(null);
@@ -46,13 +35,6 @@ export default function SlideMenu({
   // Component configuration
   const customVariables: Object = {};
 
-  // Component configuration 1: Activation border
-  if (border === 'right') {
-    Object.assign(customVariables, RIGHT_MENU_SETTINGS);
-  } else {
-    Object.assign(customVariables, LEFT_MENU_SETTINGS);
-  }
-
   // Component configuration 2: z-index
   Object.assign(customVariables, { '--slide-menu-z-index': zIndex });
 
@@ -63,7 +45,7 @@ export default function SlideMenu({
 
   return (
     <div className={className} style={style}>
-      <div className={styles.menuGrid} ref={gridRef} style={customVariables}>
+      <div className={styles.menuGrid} id="slideMenu" ref={gridRef} style={customVariables}>
         <div className={styles.menuContainer} ref={menuContainerRef}>
           <div className={styles.menuContent} ref={menuRef}>
             {children}
