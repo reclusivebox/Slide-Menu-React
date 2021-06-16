@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-use-before-define
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { usePositionAjuster, useToggleEffect } from './hooks';
 import { showShadow, hideShadow } from './effects';
 
@@ -7,6 +7,7 @@ import styles from './styles/SlideMenu.module.scss';
 
 type SlideMenuProps = React.PropsWithChildren<{
   visibleArea: number;
+  debug: boolean;
   zIndex?: number;
   className?: string;
   style?: React.CSSProperties;
@@ -18,6 +19,7 @@ export default function SlideMenu({
   style,
   visibleArea = 0,
   zIndex = 2000,
+  debug = false,
 }: SlideMenuProps) {
   const backdropRef = useRef(null);
   const menuRef = useRef(null);
@@ -28,8 +30,10 @@ export default function SlideMenu({
   // useToggleEffect(menuRef, [showShadow(gridRef)], [hideShadow(gridRef)]);
   useToggleEffect(menuRef, {
     visibleArea,
-    onShowEnd: [showShadow(gridRef)],
-    onHideEnd: [hideShadow(gridRef)],
+    onShowEnd: (debug) ? [showShadow(gridRef), () => console.log('showEnd')] : [showShadow(gridRef)],
+    onHideEnd: (debug) ? [hideShadow(gridRef), () => console.log('hideEnd')] : [hideShadow(gridRef)],
+    onHideStart: (debug) ? [() => console.log('hideStart')] : [],
+    onShowStart: (debug) ? [() => console.log('showStart')] : [],
   });
 
   // Component configuration

@@ -12,7 +12,7 @@ export default {
 export function BasicStory() {
   return (
     <>
-      <SlideMenu>
+      <SlideMenu debug>
         <div className="horizontalSpacer" />
         <div className="verticalScrollCreator" />
       </SlideMenu>
@@ -23,7 +23,7 @@ export function BasicStory() {
 export function BodyYScroll() {
   return (
     <>
-      <SlideMenu>
+      <SlideMenu debug>
         <div className="verticalScrollCreator" />
       </SlideMenu>
       <div className="verticalScrollCreator shiftRight" />
@@ -34,7 +34,7 @@ export function BodyYScroll() {
 export function BodyXScroll() {
   return (
     <>
-      <SlideMenu>
+      <SlideMenu debug>
         <div className="horizontalSpacer" />
         <div className="verticalScrollCreator" />
       </SlideMenu>
@@ -46,7 +46,7 @@ export function BodyXScroll() {
 export function NegativeZIndex() {
   return (
     <>
-      <SlideMenu zIndex="-2000">
+      <SlideMenu debug zIndex="-2000">
         <div className="horizontalSpacer" />
         <div className="verticalScrollCreator" />
       </SlideMenu>
@@ -58,7 +58,7 @@ export function NegativeZIndex() {
 export function TenPercentVisibleArea() {
   return (
     <>
-      <SlideMenu visibleArea="10">
+      <SlideMenu debug visibleArea="10">
         <div className="horizontalSpacer" />
         <div className="verticalScrollCreator" />
       </SlideMenu>
