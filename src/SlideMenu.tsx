@@ -1,7 +1,14 @@
 // eslint-disable-next-line no-use-before-define
 import React, { useRef } from 'react';
-import { usePositionAjuster, useToggleEffect } from './hooks';
+import {
+  HideStartEvent,
+  HideEndEvent,
+  ShowEndEvent,
+  ShowStartEvent,
+  dispatcherGenerator,
+} from './events';
 import { showShadow, hideShadow } from './effects';
+import { usePositionAjuster, useToggleEffect } from './hooks';
 
 import styles from './styles/SlideMenu.module.scss';
 
@@ -26,14 +33,34 @@ export default function SlideMenu({
   const menuContainerRef = useRef(null);
   const gridRef = useRef(null);
 
+  // Scroll overlay after render
   usePositionAjuster(backdropRef);
-  // useToggleEffect(menuRef, [showShadow(gridRef)], [hideShadow(gridRef)]);
+
+  // Enables events
+  const onShowEndCallbacks: (() => void)[] = [
+    showShadow(gridRef),
+    dispatcherGenerator(menuRef, ShowEndEvent),
+  ];
+  const onHideEndCallbacks: (() => void)[] = [
+    hideShadow(gridRef),
+    dispatcherGenerator(menuRef, HideEndEvent),
+  ];
+  const onShowStartCallbacks: (() => void)[] = [dispatcherGenerator(menuRef, ShowStartEvent)];
+  const onHideStartCallbacks: (() => void)[] = [dispatcherGenerator(menuRef, HideStartEvent)];
   useToggleEffect(menuRef, {
     visibleArea,
-    onShowEnd: (debug) ? [showShadow(gridRef), () => console.log('showEnd')] : [showShadow(gridRef)],
-    onHideEnd: (debug) ? [hideShadow(gridRef), () => console.log('hideEnd')] : [hideShadow(gridRef)],
-    onHideStart: (debug) ? [() => console.log('hideStart')] : [],
-    onShowStart: (debug) ? [() => console.log('showStart')] : [],
+    onShowEnd: debug
+      ? onShowEndCallbacks.concat(() => console.log('showEnd'))
+      : onShowEndCallbacks,
+    onHideEnd: debug
+      ? onHideEndCallbacks.concat(() => console.log('hideEnd'))
+      : onHideEndCallbacks,
+    onHideStart: debug
+      ? onHideStartCallbacks.concat(() => console.log('hideStart'))
+      : onHideStartCallbacks,
+    onShowStart: debug
+      ? onShowStartCallbacks.concat(() => console.log('showStart'))
+      : onShowStartCallbacks,
   });
 
   // Component configuration
@@ -44,12 +71,19 @@ export default function SlideMenu({
 
   // Component configuration 3: visible area
   if (visibleArea > 0 && visibleArea <= 100) {
-    Object.assign(customVariables, { '--slide-menu-visible-area': `${visibleArea}vw` });
+    Object.assign(customVariables, {
+      '--slide-menu-visible-area': `${visibleArea}vw`,
+    });
   }
 
   return (
     <div className={className} style={style}>
-      <div className={styles.menuGrid} id="slideMenu" ref={gridRef} style={customVariables}>
+      <div
+        className={styles.menuGrid}
+        id="slideMenu"
+        ref={gridRef}
+        style={customVariables}
+      >
         <div className={styles.menuContainer} ref={menuContainerRef}>
           <div className={styles.menuContent} ref={menuRef}>
             {children}
