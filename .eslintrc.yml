@@ -15,5 +15,13 @@ plugins:
   - '@typescript-eslint'
 rules: {
   'react/jsx-filename-extension': 'off',
-  'max-classes-per-file': 'off'
+  'max-classes-per-file': 'off',
+  'import/extensions': 'off'
+}
+settings: {
+  'import/resolver': {
+    'node': {
+      'extensions': ['.js', '.jsx', '.ts', '.tsx']
+    }
+  }
 }

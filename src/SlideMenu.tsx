@@ -26,7 +26,6 @@ export default function SlideMenu({
   style,
   visibleArea = 0,
   zIndex = 2000,
-  debug = false,
 }: SlideMenuProps) {
   const backdropRef = useRef(null);
   const menuRef = useRef(null);
@@ -49,18 +48,10 @@ export default function SlideMenu({
   const onHideStartCallbacks: (() => void)[] = [dispatcherGenerator(menuRef, HideStartEvent)];
   useToggleEffect(menuRef, {
     visibleArea,
-    onShowEnd: debug
-      ? onShowEndCallbacks.concat(() => console.log('showEnd'))
-      : onShowEndCallbacks,
-    onHideEnd: debug
-      ? onHideEndCallbacks.concat(() => console.log('hideEnd'))
-      : onHideEndCallbacks,
-    onHideStart: debug
-      ? onHideStartCallbacks.concat(() => console.log('hideStart'))
-      : onHideStartCallbacks,
-    onShowStart: debug
-      ? onShowStartCallbacks.concat(() => console.log('showStart'))
-      : onShowStartCallbacks,
+    onShowEnd: onShowEndCallbacks,
+    onHideEnd: onHideEndCallbacks,
+    onHideStart: onHideStartCallbacks,
+    onShowStart: onShowStartCallbacks,
   });
 
   // Component configuration

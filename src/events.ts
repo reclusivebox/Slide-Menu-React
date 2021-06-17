@@ -1,6 +1,6 @@
-import type {MutableRefObject} from 'react';
+import type { MutableRefObject } from 'react';
 
-class ShowStartEvent extends CustomEvent {
+class ShowStartEvent extends CustomEvent<{description: string}> {
   constructor() {
     super('showStart', {
       bubbles: true,
@@ -13,11 +13,11 @@ class ShowStartEvent extends CustomEvent {
   }
 
   get description() {
-    return super.detail.description;
+    return this.detail.description;
   }
 }
 
-class ShowEndEvent extends CustomEvent {
+class ShowEndEvent extends CustomEvent<{description: string}> {
   constructor() {
     super('showEnd', {
       bubbles: true,
@@ -29,11 +29,11 @@ class ShowEndEvent extends CustomEvent {
   }
 
   get description() {
-    return super.detail.description;
+    return this.detail.description;
   }
 }
 
-class HideStartEvent extends CustomEvent {
+class HideStartEvent extends CustomEvent<{description: string}> {
   constructor() {
     super('hideStart', {
       bubbles: true,
@@ -46,11 +46,11 @@ class HideStartEvent extends CustomEvent {
   }
 
   get description() {
-    return super.detail.description;
+    return this.detail.description;
   }
 }
 
-class HideEndEvent extends CustomEvent {
+class HideEndEvent extends CustomEvent<{description: string}> {
   constructor() {
     super('hideEnd', {
       bubbles: true,
@@ -62,14 +62,25 @@ class HideEndEvent extends CustomEvent {
   }
 
   get description() {
-    return super.detail.description;
+    return this.detail.description;
   }
 }
 
-function dispatcherGenerator(ref: MutableRefObject<null>, MyEvent: any) {
-  return () => (ref.current as unknown as HTMLElement).dispatchEvent(new MyEvent());
+type SlideMenuEvent<MyEvent extends CustomEvent> = new () => MyEvent;
+
+function dispatcherGenerator<T extends CustomEvent>(
+  ref: MutableRefObject<null>,
+  MyEvent: SlideMenuEvent<T>,
+) {
+  return function dispatcher() {
+    (ref.current as unknown as HTMLElement).dispatchEvent(new MyEvent());
+  };
 }
 
 export {
-  HideStartEvent, HideEndEvent, ShowEndEvent, ShowStartEvent, dispatcherGenerator,
+  HideStartEvent,
+  HideEndEvent,
+  ShowEndEvent,
+  ShowStartEvent,
+  dispatcherGenerator,
 };
