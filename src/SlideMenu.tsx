@@ -35,7 +35,7 @@ export default function SlideMenu({
   // Scroll overlay after render
   usePositionAjuster(backdropRef);
 
-  // Enables events
+  // Define callbacks for each stage
   const onShowEndCallbacks: (() => void)[] = [
     showShadow(gridRef),
     dispatcherGenerator(menuRef, ShowEndEvent),
@@ -46,6 +46,8 @@ export default function SlideMenu({
   ];
   const onShowStartCallbacks: (() => void)[] = [dispatcherGenerator(menuRef, ShowStartEvent)];
   const onHideStartCallbacks: (() => void)[] = [dispatcherGenerator(menuRef, HideStartEvent)];
+
+  // Enable callbacks and events
   useToggleEffect(menuRef, {
     visibleArea,
     onShowEnd: onShowEndCallbacks,
@@ -54,7 +56,7 @@ export default function SlideMenu({
     onShowStart: onShowStartCallbacks,
   });
 
-  // Component configuration
+  // Component configuration 1: Object setup
   const customVariables: Object = {};
 
   // Component configuration 2: z-index
