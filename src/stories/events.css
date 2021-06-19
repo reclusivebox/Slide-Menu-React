@@ -1,0 +1,22 @@
+.centerContents {
+    width: 90vw;
+    height: 90vh;
+    display: grid;
+    place-items: center;
+}
+
+.customButtom {
+    display: block;
+    padding: 1em;
+    background-color: blue;
+    color: white;
+    border-radius: 1em;
+}
+
+.customButtom:active {
+    background-color: red;
+}
+
+.customButtom:focus {
+    background-color: green;
+}

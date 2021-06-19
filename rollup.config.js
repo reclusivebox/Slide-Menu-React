@@ -3,7 +3,7 @@ import postCSS from 'rollup-plugin-postcss';
 import externals from 'rollup-plugin-node-externals';
 
 export default {
-  input: 'src/SlideMenu.tsx',
+  input: 'src/index.ts',
   output: {
     file: 'dist/SlideMenu.js',
     format: 'umd',

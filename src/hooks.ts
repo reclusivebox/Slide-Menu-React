@@ -1,22 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 
-function useMobileEffect(callback: Function) {
+export function useMobileEffect(callback: Function) {
   const isMobile = window.matchMedia('screen and (max-width: 576px)');
   useEffect(() => {
     callback();
   }, [isMobile]);
-}
-
-/**
- * A react Hook to scroll the menu on Render.
- * @param ref - The Ref for the element you want to centralize on render.
- */
-export function usePositionAjuster(ref: React.MutableRefObject<null>) {
-  useMobileEffect(() => {
-    (ref.current as unknown as Element).scrollIntoView({
-      inline: 'center',
-    });
-  });
 }
 
 type UseToggleEffectOptions = {
@@ -67,31 +55,25 @@ export function useToggleEffect(
       && !activeRef.current
     ) {
       onShowStart.forEach((callback) => callback());
-    } else
+    }
 
     // showEnd
-    if (
-      showRatio >= secondThreshold
-      && !activeRef.current
-    ) {
+    else if (showRatio >= secondThreshold && !activeRef.current) {
       onShowEnd.forEach((callback) => callback());
       activeRef.current = true;
-    } else
+    }
 
     // hideStart
-    if (
+    else if (
       showRatio <= secondThreshold
       && showRatio > firstThreshold
       && activeRef.current
     ) {
       onHideStart.forEach((callback) => callback());
-    } else
+    }
 
     // hideEnd
-    if (
-      showRatio <= firstThreshold
-      && activeRef.current
-    ) {
+    else if (showRatio <= firstThreshold && activeRef.current) {
       onHideEnd.forEach((callback) => callback());
       activeRef.current = false;
     }
@@ -104,4 +86,25 @@ export function useToggleEffect(
 
     observer.observe(menuRef.current as unknown as HTMLElement);
   });
+}
+
+export type CallbackSchedulerOptions = {
+  [eventName: string]: React.EventHandler<any>;
+};
+export function useCallbackScheduler(
+  targetRef: React.MutableRefObject<null>,
+  events: CallbackSchedulerOptions,
+) {
+  const effect = () => {
+    const target = targetRef.current as unknown as HTMLElement;
+    Object.entries(events).forEach(([eventName, callback]) => {
+      target.addEventListener(eventName, callback);
+    });
+  };
+
+  useMobileEffect(effect);
+}
+
+export function useGlobalEventWatcher(eventName: string, callback: React.EventHandler<any>) {
+  useMobileEffect(() => window.addEventListener(eventName, callback));
 }

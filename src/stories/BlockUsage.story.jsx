@@ -1,5 +1,5 @@
 import React from 'react';
-import SlideMenu from '../../dist/SlideMenu';
+import { SlideMenu } from '../../dist/SlideMenu';
 
 import './blockUsage.css';
 

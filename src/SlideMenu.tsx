@@ -1,14 +1,14 @@
 // eslint-disable-next-line no-use-before-define
 import React, { useRef } from 'react';
 import {
-  HideStartEvent,
-  HideEndEvent,
-  ShowEndEvent,
-  ShowStartEvent,
+  monitoredEvents,
   dispatcherGenerator,
 } from './events';
 import { showShadow, hideShadow } from './effects';
-import { usePositionAjuster, useToggleEffect } from './hooks';
+import {
+  useToggleEffect, useCallbackScheduler, useMobileEffect, useGlobalEventWatcher,
+} from './hooks';
+import type { CallbackSchedulerOptions } from './hooks';
 
 import styles from './styles/SlideMenu.module.scss';
 
@@ -18,12 +18,20 @@ type SlideMenuProps = React.PropsWithChildren<{
   zIndex?: number;
   className?: string;
   style?: React.CSSProperties;
+  onShowStart?: React.EventHandler<any>,
+  onHideStart?: React.EventHandler<any>,
+  onHideEnd?: React.EventHandler<any>,
+  onShowEnd?: React.EventHandler<any>,
 }>;
 
 export default function SlideMenu({
   children,
   className,
   style,
+  onShowStart,
+  onShowEnd,
+  onHideStart,
+  onHideEnd,
   visibleArea = 0,
   zIndex = 2000,
 }: SlideMenuProps) {
@@ -32,20 +40,38 @@ export default function SlideMenu({
   const menuContainerRef = useRef(null);
   const gridRef = useRef(null);
 
+  // Controlling functions
+  const showMenu = () => {
+    (menuContainerRef.current as unknown as HTMLElement).scrollIntoView({
+      inline: 'start',
+      behavior: 'smooth',
+    });
+  };
+
+  const hideMenu = () => {
+    (backdropRef.current as unknown as HTMLElement).scrollIntoView({
+      inline: 'end',
+    });
+  };
+
   // Scroll overlay after render
-  usePositionAjuster(backdropRef);
+  useMobileEffect(hideMenu);
 
   // Define callbacks for each stage
   const onShowEndCallbacks: (() => void)[] = [
     showShadow(gridRef),
-    dispatcherGenerator(menuRef, ShowEndEvent),
+    dispatcherGenerator(menuRef, monitoredEvents.showEnd),
   ];
   const onHideEndCallbacks: (() => void)[] = [
     hideShadow(gridRef),
-    dispatcherGenerator(menuRef, HideEndEvent),
+    dispatcherGenerator(menuRef, monitoredEvents.hideEnd),
   ];
-  const onShowStartCallbacks: (() => void)[] = [dispatcherGenerator(menuRef, ShowStartEvent)];
-  const onHideStartCallbacks: (() => void)[] = [dispatcherGenerator(menuRef, HideStartEvent)];
+  const onShowStartCallbacks: (() => void)[] = [
+    dispatcherGenerator(menuRef, monitoredEvents.showStart),
+  ];
+  const onHideStartCallbacks: (() => void)[] = [
+    dispatcherGenerator(menuRef, monitoredEvents.hideStart),
+  ];
 
   // Enable callbacks and events
   useToggleEffect(menuRef, {
@@ -56,13 +82,43 @@ export default function SlideMenu({
     onShowStart: onShowStartCallbacks,
   });
 
-  // Component configuration 1: Object setup
+  // Parsing Event Handlers 0: Object setup
+  const eventHandlers: CallbackSchedulerOptions = {};
+
+  // Parsing Event Handlers 1: showStart
+  if (onShowStart) {
+    eventHandlers.showStart = onShowStart;
+  }
+
+  // Parsing Event Handlers 2: showEnd
+  if (onShowEnd) {
+    eventHandlers.showEnd = onShowEnd;
+  }
+
+  // Parsing Event Handlers 3: hideStart
+  if (onHideStart) {
+    eventHandlers.hideStart = onHideStart;
+  }
+
+  // Parsing Event Handlers 4: hideEnd
+  if (onHideEnd) {
+    eventHandlers.hideEnd = onHideEnd;
+  }
+
+  // Schedule handlers
+  useCallbackScheduler(menuRef, eventHandlers);
+
+  // Enabling control through order events
+  useGlobalEventWatcher('showMenuOrder', showMenu);
+  useGlobalEventWatcher('hideMenuOrder', hideMenu);
+
+  // Component configuration 0: Object setup
   const customVariables: Object = {};
 
-  // Component configuration 2: z-index
+  // Component configuration 1: z-index
   Object.assign(customVariables, { '--slide-menu-z-index': zIndex });
 
-  // Component configuration 3: visible area
+  // Component configuration 2: visible area
   if (visibleArea > 0 && visibleArea <= 100) {
     Object.assign(customVariables, {
       '--slide-menu-visible-area': `${visibleArea}vw`,
