@@ -1,42 +1,34 @@
+:root {
+  --slide-menu-z-index: 2000;
+  --slide-menu-sensible-area: 4rem;
+  --shifting-trnsformation: translateX(calc(-100% + var(--slide-menu-sensible-area)));
+}
+
 @media screen and (max-width: 576px) {
-  .menuGrid {
-    // Immutable
+  .slideMenu {
     position: fixed;
-    width: 100vw;
     height: 100vh;
-    box-sizing: border-box;
-    overflow: auto;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    z-index: var(--slide-menu-z-index);
+    max-width: 100vw;
+    z-index: 2000;
+    box-sizing: content-box;
 
-    // Backdrop Stuff
-    background-color: rgba(0, 0, 0, 0);
-    transition: background-color 500ms;
+    transform: var(--shifting-trnsformation);
 
-    // Display stuff
+    // display things
     display: grid;
-    grid-template: "menu backdrop" 100vh / auto calc(100vw - var(--slide-menu-visible-area, 0px));
+    grid-template: "menu sensibleArea" 100vh / auto var(--slide-menu-sensible-area);
 
     .menuContainer {
       grid-area: menu;
-      scroll-snap-align: center;
       height: 100%;
-
-      .menuContent {
-        height: 100%;
-        max-width: 100vw;
-        overflow: auto;
-        scrollbar-width: none;
-      }
+      overflow: auto;
+      max-width: calc(100vw - var(--slide-menu-sensible-area));
+      scrollbar-width: none;
     }
 
-    .backdrop {
-      grid-area: backdrop;
-      height: 0.1px;
-      width: 100%;
-      opacity: 0.01;
-      scroll-snap-align: center;
+    .sensibleArea {
+      grid-area: sensibleArea;
+      background-color: transparent;
     }
   }
 }

@@ -1,47 +1,90 @@
-import type { MutableRefObject } from 'react';
+import React from 'react';
 
-// Backdrop effects
-export function showShadow(gridRef: MutableRefObject<null>) {
-  return () => {
-    const grid = gridRef.current as unknown as HTMLElement;
-    setTimeout(() => {
-      grid.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-    }, 100);
-  };
-}
+type SlideMenuOptions = {
+  showStateRef: React.MutableRefObject<boolean>;
+  animationDuration?: number;
+};
 
-export function hideShadow(gridRef: MutableRefObject<null>) {
-  return () => {
-    const grid = gridRef.current as unknown as HTMLElement;
-    grid.style.backgroundColor = 'rgba(0, 0, 0, 0)';
-  };
-}
-
-// Border Effect
-export function hideBorder(
-  backdropRef: MutableRefObject<null>,
-  menuContainerRef: MutableRefObject<null>,
+function generateMovementHandler(
+  slideMenuRef: React.MutableRefObject<null>,
+  menuContainerRef: React.MutableRefObject<null>,
+  options: SlideMenuOptions,
 ) {
-  return () => {
+  const movementHandler: React.EventHandler<
+    React.SyntheticEvent<HTMLElement, TouchEvent>
+  > = (event) => {
+    const touch = (event as unknown as TouchEvent).touches[0];
+    const distance = touch.clientX;
+    const slideMenu = slideMenuRef.current as unknown as HTMLElement;
     const menuContainer = menuContainerRef.current as unknown as HTMLElement;
-    const backdrop = backdropRef.current as unknown as HTMLElement;
 
-    backdrop.style.width = '100vw';
-    menuContainer.style.borderRightWidth = '0px';
+    slideMenu.style.transform = `translateX(calc(-100% ${
+      options.showStateRef.current ? '+ var(--slide-menu-sensible-area)' : ''
+    } + ${
+      distance <= menuContainer.offsetWidth
+        ? distance
+        : menuContainer.offsetWidth
+    }px))`;
   };
+
+  return movementHandler;
 }
 
-export function resetBorder(
-  backdropRef: MutableRefObject<null>,
-  menuContainerRef: MutableRefObject<null>,
+function showCallback(
+  slideMenuRef: React.MutableRefObject<null>,
+  options: SlideMenuOptions,
 ) {
-  return () => {
-    const menuContainer = menuContainerRef.current as unknown as HTMLElement;
-    const backdrop = backdropRef.current as unknown as HTMLElement;
-
-    setTimeout(() => {
-      backdrop.style.width = 'initial';
-    }, 100);
-    menuContainer.style.borderRightWidth = '10vw';
-  };
+  const slideMenu = slideMenuRef.current as unknown as HTMLElement;
+  const stateRef = options.showStateRef;
+  slideMenu.style.transform = 'translateX(0%)';
+  stateRef.current = true;
 }
+
+function hideCallback(
+  slideMenuRef: React.MutableRefObject<null>,
+  options: SlideMenuOptions,
+) {
+  const slideMenu = slideMenuRef.current as unknown as HTMLElement;
+  const stateRef = options.showStateRef;
+  slideMenu.style.transform =
+    'translateX(calc(-100% + var(--slide-menu-sensible-area)))';
+  stateRef.current = false;
+}
+
+function generateTouchStartHandler(
+  slideMenuRef: React.MutableRefObject<null>,
+  menuContainerRef: React.MutableRefObject<null>,
+  options: SlideMenuOptions,
+) {
+  const touchStartHandler: React.EventHandler<
+    React.SyntheticEvent<HTMLElement, TouchEvent>
+  > = (firstEvent) => {
+    firstEvent.target.addEventListener(
+      'touchend',
+      (event) => {
+        const touch = (event as unknown as TouchEvent).changedTouches[0];
+        const distance = touch.clientX;
+        const slideMenu = slideMenuRef.current as unknown as HTMLElement;
+        const menuContainer =
+          menuContainerRef.current as unknown as HTMLElement;
+
+        slideMenu.style.transition = `transform ${options.animationDuration ?? 250}ms`;
+
+        if (distance >= menuContainer.offsetWidth / 1.5) {
+          showCallback(slideMenuRef, options);
+        } else {
+          hideCallback(slideMenuRef, options);
+        }
+
+        setTimeout(() => {
+          slideMenu.style.transition = '';
+        }, options.animationDuration ?? 250);
+      },
+      { once: true },
+    );
+  };
+
+  return touchStartHandler;
+}
+
+export { generateMovementHandler, generateTouchStartHandler };

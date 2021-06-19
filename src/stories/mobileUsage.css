@@ -25,3 +25,7 @@
     position: relative;
     left: 50px;
 }
+
+body {
+    padding: 0px !important;
+}
