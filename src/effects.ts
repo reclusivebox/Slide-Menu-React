@@ -43,11 +43,17 @@ function showCallback(
   }ms`;
   slideMenu.style.transform = 'translateX(0%)';
 
-  setTimeout(() => {
-    slideMenu.style.transition = '';
-    stateRef.current = true;
-    slideMenu.dispatchEvent(new SlideMenuShownEvent());
-  }, options.animationDuration ?? 250);
+  slideMenu.addEventListener(
+    'transitionend',
+    (event) => {
+      if (event.propertyName === 'transform') {
+        slideMenu.style.transition = '';
+        stateRef.current = true;
+        slideMenu.dispatchEvent(new SlideMenuShownEvent());
+      }
+    },
+    { once: true },
+  );
 }
 
 function hideCallback(
@@ -63,11 +69,17 @@ function hideCallback(
   slideMenu.style.transform =
     'translateX(calc(-100% + var(--slide-menu-sensible-area)))';
 
-  setTimeout(() => {
-    slideMenu.style.transition = '';
-    stateRef.current = false;
-    slideMenu.dispatchEvent(new SlideMenuHiddenEvent());
-  }, options.animationDuration ?? 250);
+  slideMenu.addEventListener(
+    'transitionend',
+    (event) => {
+      if (event.propertyName === 'transform') {
+        slideMenu.style.transition = '';
+        stateRef.current = false;
+        slideMenu.dispatchEvent(new SlideMenuHiddenEvent());
+      }
+    },
+    { once: true },
+  );
 }
 
 function generateTouchStartHandler(
@@ -83,23 +95,14 @@ function generateTouchStartHandler(
       (event) => {
         const touch = (event as unknown as TouchEvent).changedTouches[0];
         const distance = touch.clientX;
-        const slideMenu = slideMenuRef.current as unknown as HTMLElement;
         const menuContainer =
           menuContainerRef.current as unknown as HTMLElement;
-
-        slideMenu.style.transition = `transform ${
-          options.animationDuration ?? 250
-        }ms`;
 
         if (distance >= menuContainer.offsetWidth / 1.5) {
           showCallback(slideMenuRef, options);
         } else {
           hideCallback(slideMenuRef, options);
         }
-
-        setTimeout(() => {
-          slideMenu.style.transition = '';
-        }, options.animationDuration ?? 250);
       },
       { once: true },
     );
