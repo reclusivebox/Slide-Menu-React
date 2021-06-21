@@ -48,8 +48,11 @@ function showCallback(
     (event) => {
       if (event.propertyName === 'transform') {
         slideMenu.style.transition = '';
-        stateRef.current = true;
-        slideMenu.dispatchEvent(new SlideMenuShownEvent());
+
+        if (!stateRef.current) {
+          stateRef.current = true;
+          slideMenu.dispatchEvent(new SlideMenuShownEvent());
+        }
       }
     },
     { once: true },
@@ -74,8 +77,11 @@ function hideCallback(
     (event) => {
       if (event.propertyName === 'transform') {
         slideMenu.style.transition = '';
-        stateRef.current = false;
-        slideMenu.dispatchEvent(new SlideMenuHiddenEvent());
+
+        if (stateRef.current) {
+          stateRef.current = false;
+          slideMenu.dispatchEvent(new SlideMenuHiddenEvent());
+        }
       }
     },
     { once: true },
