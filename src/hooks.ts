@@ -1,4 +1,6 @@
 import React, { useEffect, useRef } from 'react';
+import { showCallback, hideCallback, SlideMenuOptions } from './effects';
+import type { HideMenuOrderEvent, ShowMenuOrderEvent } from './events';
 
 export function useMobileEffect(callback: Function) {
   const isMobile = window.matchMedia('screen and (max-width: 576px)');
@@ -92,6 +94,7 @@ export function useToggleEffect(
 export type CallbackSchedulerOptions = {
   [eventName: string]: React.EventHandler<any>;
 };
+
 export function useCallbackScheduler(
   targetRef: React.MutableRefObject<null>,
   events: CallbackSchedulerOptions,
@@ -104,13 +107,6 @@ export function useCallbackScheduler(
   };
 
   useMobileEffect(effect);
-}
-
-export function useGlobalEventWatcher(
-  eventName: string,
-  callback: React.EventHandler<any>,
-) {
-  useMobileEffect(() => window.addEventListener(eventName, callback));
 }
 
 export function useLocalEventWatcher(
@@ -144,4 +140,30 @@ export function useLifeCycleEvents(
   if (onHidden) {
     useLocalEventWatcher(targetRef, 'slideMenuHidden', onHidden);
   }
+}
+
+export function useOrderEvents(targetRef: React.MutableRefObject<null>, options: SlideMenuOptions) {
+  useMobileEffect(() => {
+    const slideMenu = targetRef.current as unknown as HTMLElement;
+
+    function enableShowOrder(event: ShowMenuOrderEvent) {
+      if ((event.menuId && event.menuId === slideMenu.id) || !event.menuId) {
+        showCallback(targetRef, options);
+      }
+    }
+
+    function enableHideShowOrder(event: HideMenuOrderEvent) {
+      if ((event.menuId && event.menuId === slideMenu.id) || !event.menuId) {
+        hideCallback(targetRef, options);
+      }
+    }
+
+    window.addEventListener('showMenuOrder' as any, enableShowOrder);
+    window.addEventListener('hideMenuOrder' as any, enableHideShowOrder);
+
+    return () => {
+      window.removeEventListener('showMenuOrder' as any, enableShowOrder);
+      window.removeEventListener('hideMenuOrder' as any, enableHideShowOrder);
+    };
+  });
 }

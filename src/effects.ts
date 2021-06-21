@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  SlideMenuShownEvent,
-  SlideMenuHiddenEvent,
-} from './events';
+import { SlideMenuShownEvent, SlideMenuHiddenEvent } from './events';
 
 type SlideMenuOptions = {
   showStateRef: React.MutableRefObject<boolean>;
@@ -95,4 +92,10 @@ function generateTouchStartHandler(
   return touchStartHandler;
 }
 
-export { generateMovementHandler, generateTouchStartHandler };
+export {
+  generateMovementHandler,
+  generateTouchStartHandler,
+  showCallback,
+  hideCallback,
+  SlideMenuOptions,
+};

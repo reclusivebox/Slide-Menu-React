@@ -35,17 +35,17 @@ export function EventCycleLog() {
   );
 }
 
-// export function OrderEvents() {
-//   return (
-//     <Grommet plain>
-//       <SlideMenu>
-//         <div className="centerContents">
-//           <Button primary onClick={close}>Close</Button>
-//         </div>
-//       </SlideMenu>
-//       <div className="centerContents">
-//         <Button primary onClick={open}>Open</Button>
-//       </div>
-//     </Grommet>
-//   );
-// }
+export function OrderEvents() {
+  return (
+    <Grommet plain>
+      <SlideMenu>
+        <div className="centerContents">
+          <Button primary onClick={close}>Close</Button>
+        </div>
+      </SlideMenu>
+      <div className="centerContents">
+        <Button primary onClick={open}>Open</Button>
+      </div>
+    </Grommet>
+  );
+}
