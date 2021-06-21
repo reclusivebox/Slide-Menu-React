@@ -10,6 +10,7 @@ type SlideMenuProps = React.PropsWithChildren<{
   debug: boolean;
   zIndex?: number;
   className?: string;
+  id?: string;
   style?: React.CSSProperties;
   onShown?: React.EventHandler<any>,
   onHidden?: React.EventHandler<any>,
@@ -19,6 +20,7 @@ export default function SlideMenu({
   children,
   className,
   style,
+  id,
   onShown,
   onHidden,
   visibleArea = 0,
@@ -52,6 +54,7 @@ export default function SlideMenu({
       <div
         className={styles.slideMenu}
         ref={mainRef}
+        id={id}
       >
         <div className={styles.menuContainer} ref={menuContainerRef}>
           {children}

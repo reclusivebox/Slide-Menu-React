@@ -12,13 +12,13 @@ export default {
   component: SlideMenu,
 };
 
-const open = () => {
+const open = (id) => {
   console.log('Open Order Event fired');
-  document.body.dispatchEvent(new ShowMenuOrderEvent());
+  return () => document.body.dispatchEvent(new ShowMenuOrderEvent(id));
 };
-const close = () => {
+const close = (id) => {
   console.log('Hide Order Event fired');
-  document.body.dispatchEvent(new HideMenuOrderEvent());
+  return () => document.body.dispatchEvent(new HideMenuOrderEvent(id));
 };
 
 export function EventCycleLog() {
@@ -40,11 +40,30 @@ export function OrderEvents() {
     <Grommet plain>
       <SlideMenu>
         <div className="centerContents">
-          <Button primary onClick={close}>Close</Button>
+          <Button primary onClick={close()}>Close</Button>
         </div>
       </SlideMenu>
       <div className="centerContents">
-        <Button primary onClick={open}>Open</Button>
+        <Button primary onClick={open()}>Open</Button>
+      </div>
+    </Grommet>
+  );
+}
+
+export function OrderWithIds() {
+  return (
+    <Grommet plain>
+      <SlideMenu id="correctMenu">
+        <div className="centerContents">
+          <Button primary onClick={close('correctMenu')}>Close correct menu</Button>
+          <Button primary onClick={close('wrongMenu')}>Close wrong menu</Button>
+          <Button primary onClick={close()}>Close any menu</Button>
+        </div>
+      </SlideMenu>
+      <div className="centerContents">
+        <Button primary onClick={open('correctMenu')}>Open correct menu</Button>
+        <Button primary onClick={open('wrongMenu')}>Open wrong menu</Button>
+        <Button primary onClick={open()}>Open any menu</Button>
       </div>
     </Grommet>
   );

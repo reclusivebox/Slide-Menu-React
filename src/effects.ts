@@ -37,9 +37,17 @@ function showCallback(
 ) {
   const slideMenu = slideMenuRef.current as unknown as HTMLElement;
   const stateRef = options.showStateRef;
+
+  slideMenu.style.transition = `transform ${
+    options.animationDuration ?? 250
+  }ms`;
   slideMenu.style.transform = 'translateX(0%)';
-  stateRef.current = true;
-  slideMenu.dispatchEvent(new SlideMenuShownEvent());
+
+  setTimeout(() => {
+    slideMenu.style.transition = '';
+    stateRef.current = true;
+    slideMenu.dispatchEvent(new SlideMenuShownEvent());
+  }, options.animationDuration ?? 250);
 }
 
 function hideCallback(
@@ -48,10 +56,18 @@ function hideCallback(
 ) {
   const slideMenu = slideMenuRef.current as unknown as HTMLElement;
   const stateRef = options.showStateRef;
+
+  slideMenu.style.transition = `transform ${
+    options.animationDuration ?? 250
+  }ms`;
   slideMenu.style.transform =
     'translateX(calc(-100% + var(--slide-menu-sensible-area)))';
-  stateRef.current = false;
-  slideMenu.dispatchEvent(new SlideMenuHiddenEvent());
+
+  setTimeout(() => {
+    slideMenu.style.transition = '';
+    stateRef.current = false;
+    slideMenu.dispatchEvent(new SlideMenuHiddenEvent());
+  }, options.animationDuration ?? 250);
 }
 
 function generateTouchStartHandler(
