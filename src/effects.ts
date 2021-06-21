@@ -63,31 +63,6 @@ function hideCallback(
   );
 }
 
-// function generateMovementHandler(
-//   slideMenuRef: React.MutableRefObject<null>,
-//   menuContainerRef: React.MutableRefObject<null>,
-//   options: SlideMenuOptions,
-// ) {
-//   const movementHandler: React.EventHandler<
-//     React.SyntheticEvent<HTMLElement, TouchEvent>
-//   > = (event) => {
-//     const touch = (event as unknown as TouchEvent).touches[0];
-//     const distance = touch.clientX;
-//     const slideMenu = slideMenuRef.current as unknown as HTMLElement;
-//     const menuContainer = menuContainerRef.current as unknown as HTMLElement;
-
-//     slideMenu.style.transform = `translateX(calc(-100% ${
-//       options.showStateRef.current ? '+ var(--slide-menu-sensible-area)' : ''
-//     } + ${
-//       distance <= menuContainer.offsetWidth
-//         ? distance
-//         : menuContainer.offsetWidth
-//     }px))`;
-//   };
-
-//   return movementHandler;
-// }
-
 function generatePositionAjuster(
   slideMenuRef: React.MutableRefObject<null>,
   menuContainerRef: React.MutableRefObject<null>,
@@ -104,14 +79,6 @@ function generatePositionAjuster(
       hideCallback(slideMenuRef, options);
     }
   };
-}
-
-function fixFirstTouch(options: SlideMenuOptions) {
-  if (!options.showStateRef.current && (options.border ?? 'left') === 'left') {
-    return ' + var(--slide-menu-sensible-area)';
-  }
-
-  return '';
 }
 
 function moveMenu(

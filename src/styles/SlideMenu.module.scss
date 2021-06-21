@@ -33,6 +33,7 @@
       background-color: red;
       height: 100%;
       width: var(--slide-menu-sensible-area);
+      touch-action: none;
     }
   }
 }
