@@ -62,7 +62,6 @@ export default function SlideMenu({
         <div
           className={styles.sensibleArea}
           ref={sensibleAreaRef}
-          onTouchMove={generateMovementHandler(mainRef, menuContainerRef, menuGeneralOptions)}
           onTouchStart={generateTouchStartHandler(mainRef, menuContainerRef, menuGeneralOptions)}
         />
       </div>
