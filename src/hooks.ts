@@ -41,7 +41,8 @@ export function useToggleEffect(
   }: UseToggleEffectOptions,
 ) {
   const firstThreshold = 0.1 + visibleArea / 100;
-  const secondThreshold = firstThreshold + (1 - firstThreshold) ** (1 + 1 - firstThreshold);
+  const secondThreshold =
+    firstThreshold + (1 - firstThreshold) ** (1 + 1 - firstThreshold);
 
   const activeRef = useRef(false);
 
@@ -50,9 +51,9 @@ export function useToggleEffect(
 
     // showStart
     if (
-      showRatio >= firstThreshold
-      && showRatio < secondThreshold
-      && !activeRef.current
+      showRatio >= firstThreshold &&
+      showRatio < secondThreshold &&
+      !activeRef.current
     ) {
       onShowStart.forEach((callback) => callback());
     }
@@ -65,9 +66,9 @@ export function useToggleEffect(
 
     // hideStart
     else if (
-      showRatio <= secondThreshold
-      && showRatio > firstThreshold
-      && activeRef.current
+      showRatio <= secondThreshold &&
+      showRatio > firstThreshold &&
+      activeRef.current
     ) {
       onHideStart.forEach((callback) => callback());
     }
@@ -105,6 +106,42 @@ export function useCallbackScheduler(
   useMobileEffect(effect);
 }
 
-export function useGlobalEventWatcher(eventName: string, callback: React.EventHandler<any>) {
+export function useGlobalEventWatcher(
+  eventName: string,
+  callback: React.EventHandler<any>,
+) {
   useMobileEffect(() => window.addEventListener(eventName, callback));
+}
+
+export function useLocalEventWatcher(
+  target: React.MutableRefObject<null>,
+  event: string,
+  callback: React.EventHandler<any>,
+  onlyMobile = false,
+) {
+  if (onlyMobile) {
+    useMobileEffect(() => {
+      const targetElement = target.current as unknown as HTMLElement;
+      targetElement.addEventListener(event, callback);
+    });
+  } else {
+    useEffect(() => {
+      const targetElement = target.current as unknown as HTMLElement;
+      targetElement.addEventListener(event, callback);
+    }, []);
+  }
+}
+
+export function useLifeCycleEvents(
+  targetRef: React.MutableRefObject<null>,
+  onShown?: React.EventHandler<any>,
+  onHidden?: React.EventHandler<any>,
+) {
+  if (onShown) {
+    useLocalEventWatcher(targetRef, 'slideMenuShown', onShown);
+  }
+
+  if (onHidden) {
+    useLocalEventWatcher(targetRef, 'slideMenuHidden', onHidden);
+  }
 }

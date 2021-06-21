@@ -21,14 +21,12 @@ const close = () => {
   document.body.dispatchEvent(new HideMenuOrderEvent());
 };
 
-export function EventCicleLog() {
+export function EventCycleLog() {
   return (
     <>
       <SlideMenu
-        onHideStart={() => console.log('hideStart event fired')}
-        onHideEnd={() => console.log('hideEnd event fired')}
-        onShowStart={() => console.log('showStart event fired')}
-        onShowEnd={() => console.log('showEnd event fired')}
+        onShown={() => console.log('Menu Shown')}
+        onHidden={() => console.log('Menu Hidden')}
       >
         <div className="horizontalSpacer" />
         <div className="verticalScrollCreator" />
@@ -37,17 +35,17 @@ export function EventCicleLog() {
   );
 }
 
-export function OrderEvents() {
-  return (
-    <Grommet plain>
-      <SlideMenu>
-        <div className="centerContents">
-          <Button primary onClick={close}>Close</Button>
-        </div>
-      </SlideMenu>
-      <div className="centerContents">
-        <Button primary onClick={open}>Open</Button>
-      </div>
-    </Grommet>
-  );
-}
+// export function OrderEvents() {
+//   return (
+//     <Grommet plain>
+//       <SlideMenu>
+//         <div className="centerContents">
+//           <Button primary onClick={close}>Close</Button>
+//         </div>
+//       </SlideMenu>
+//       <div className="centerContents">
+//         <Button primary onClick={open}>Open</Button>
+//       </div>
+//     </Grommet>
+//   );
+// }

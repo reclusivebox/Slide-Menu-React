@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-use-before-define
 import React, { useRef } from 'react';
-import { useMobileEffect } from './hooks';
+import { useLifeCycleEvents } from './hooks';
 import { generateMovementHandler, generateTouchStartHandler } from './effects';
 
 import styles from './styles/SlideMenu.module.scss';
@@ -11,20 +11,16 @@ type SlideMenuProps = React.PropsWithChildren<{
   zIndex?: number;
   className?: string;
   style?: React.CSSProperties;
-  onShowStart?: React.EventHandler<any>;
-  onHideStart?: React.EventHandler<any>;
-  onHideEnd?: React.EventHandler<any>;
-  onShowEnd?: React.EventHandler<any>;
+  onShown?: React.EventHandler<any>,
+  onHidden?: React.EventHandler<any>,
 }>;
 
 export default function SlideMenu({
   children,
   className,
   style,
-  // onShowStart,
-  // onShowEnd,
-  // onHideStart,
-  // onHideEnd,
+  onShown,
+  onHidden,
   visibleArea = 0,
   zIndex = 2000,
 }: SlideMenuProps) {
@@ -46,10 +42,7 @@ export default function SlideMenu({
     });
   }
 
-  // useMobileEffect(() => {
-  //   const sensibleArea = sensibleAreaRef.current as unknown as HTMLElement;
-  //   sensibleArea.addEventListener
-  // });
+  useLifeCycleEvents(mainRef, onShown, onHidden);
 
   return (
     <>

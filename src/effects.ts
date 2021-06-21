@@ -1,4 +1,8 @@
 import React from 'react';
+import {
+  SlideMenuShownEvent,
+  SlideMenuHiddenEvent,
+} from './events';
 
 type SlideMenuOptions = {
   showStateRef: React.MutableRefObject<boolean>;
@@ -38,6 +42,7 @@ function showCallback(
   const stateRef = options.showStateRef;
   slideMenu.style.transform = 'translateX(0%)';
   stateRef.current = true;
+  slideMenu.dispatchEvent(new SlideMenuShownEvent());
 }
 
 function hideCallback(
@@ -49,6 +54,7 @@ function hideCallback(
   slideMenu.style.transform =
     'translateX(calc(-100% + var(--slide-menu-sensible-area)))';
   stateRef.current = false;
+  slideMenu.dispatchEvent(new SlideMenuHiddenEvent());
 }
 
 function generateTouchStartHandler(
@@ -68,7 +74,9 @@ function generateTouchStartHandler(
         const menuContainer =
           menuContainerRef.current as unknown as HTMLElement;
 
-        slideMenu.style.transition = `transform ${options.animationDuration ?? 250}ms`;
+        slideMenu.style.transition = `transform ${
+          options.animationDuration ?? 250
+        }ms`;
 
         if (distance >= menuContainer.offsetWidth / 1.5) {
           showCallback(slideMenuRef, options);
