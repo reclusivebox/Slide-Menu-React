@@ -1,7 +1,8 @@
 :root {
   --slide-menu-z-index: 2000;
   --slide-menu-sensible-area: 4rem;
-  --shifting-trnsformation: translateX(calc(-100% + var(--slide-menu-sensible-area)));
+  --slide-menu-sensible-area-offset: 1rem;
+  --shifting-trnsformation: translateX(-100%);
 }
 
 @media screen and (max-width: 576px) {
@@ -16,19 +17,22 @@
 
     // display things
     display: grid;
-    grid-template: "menu sensibleArea" 100vh / auto var(--slide-menu-sensible-area);
+    grid-template: "menu" 100vh / auto;
 
     .menuContainer {
       grid-area: menu;
       height: 100%;
       overflow: auto;
-      max-width: calc(100vw - var(--slide-menu-sensible-area));
+      max-width: 100vw;
       scrollbar-width: none;
     }
 
     .sensibleArea {
-      grid-area: sensibleArea;
-      background-color: green;
+      position: absolute;
+      inset: 0px 0px 0px calc(100% - var(--slide-menu-sensible-area-offset));
+      background-color: red;
+      height: 100%;
+      width: var(--slide-menu-sensible-area);
     }
   }
 }

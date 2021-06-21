@@ -45,8 +45,7 @@ function hideCallback(
   slideMenu.style.transition = `transform ${
     options.animationDuration ?? 250
   }ms`;
-  slideMenu.style.transform =
-    'translateX(calc(-100% + var(--slide-menu-sensible-area)))';
+  slideMenu.style.transform = 'var(--shifting-trnsformation)';
 
   slideMenu.addEventListener(
     'transitionend',
@@ -117,40 +116,54 @@ function fixFirstTouch(options: SlideMenuOptions) {
 
 function moveMenu(
   target: React.MutableRefObject<null>,
-  initialCoordinates: { x: number, y: number },
-  currentCoordinates: { x: number, y: number },
+  initialCoordinates: { x: number; y: number },
+  currentCoordinates: { x: number; y: number },
   options: SlideMenuOptions,
 ) {
-  const toMove = (target.current as unknown as HTMLElement);
+  const toMove = target.current as unknown as HTMLElement;
 
   if (!options.showStateRef.current) {
     switch (options.border ?? 'left') {
       case 'top':
-        toMove.style.transform = `translateY(calc(-100% + ${currentCoordinates.y - initialCoordinates.y}))`;
+        toMove.style.transform = `translateY(calc(-100% + ${
+          currentCoordinates.y - initialCoordinates.y
+        }))`;
         break;
       case 'right':
-        toMove.style.transform = `translateX(calc(100% - ${initialCoordinates.x - currentCoordinates.x}px))`;
+        toMove.style.transform = `translateX(calc(100% - ${
+          initialCoordinates.x - currentCoordinates.x
+        }px))`;
         break;
       case 'bottom':
-        toMove.style.transform = `translateY(calc(100% - ${initialCoordinates.y - currentCoordinates.y}px))`;
+        toMove.style.transform = `translateY(calc(100% - ${
+          initialCoordinates.y - currentCoordinates.y
+        }px))`;
         break;
       default:
-        toMove.style.transform = `translateX(calc(-100%${fixFirstTouch(options)} + ${currentCoordinates.x - initialCoordinates.x}px))`;
+        toMove.style.transform = `translateX(calc(-100% + ${currentCoordinates.x - initialCoordinates.x}px))`;
         break;
     }
   } else {
     switch (options.border ?? 'left') {
       case 'top':
-        toMove.style.transform = `translateY(-${initialCoordinates.y - currentCoordinates.y}px)`;
+        toMove.style.transform = `translateY(-${
+          initialCoordinates.y - currentCoordinates.y
+        }px)`;
         break;
       case 'right':
-        toMove.style.transform = `translateX(${currentCoordinates.x - initialCoordinates.x}px)`;
+        toMove.style.transform = `translateX(${
+          currentCoordinates.x - initialCoordinates.x
+        }px)`;
         break;
       case 'bottom':
-        toMove.style.transform = `translateY(${currentCoordinates.y - initialCoordinates.y}px)`;
+        toMove.style.transform = `translateY(${
+          currentCoordinates.y - initialCoordinates.y
+        }px)`;
         break;
       default:
-        toMove.style.transform = `translateX(calc(-${initialCoordinates.x - currentCoordinates.x}px${fixFirstTouch(options)}))`;
+        toMove.style.transform = `translateX(calc(-${
+          initialCoordinates.x - currentCoordinates.x
+        }px))`;
         break;
     }
   }

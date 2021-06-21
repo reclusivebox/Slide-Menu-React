@@ -20,6 +20,17 @@ export function BasicStory() {
   );
 }
 
+export function FullWidthMenu() {
+  return (
+    <>
+      <SlideMenu>
+        <div className="horizontalSpacer" />
+        <div className="verticalScrollCreator fullWidth" />
+      </SlideMenu>
+    </>
+  );
+}
+
 export function BodyYScroll() {
   return (
     <>

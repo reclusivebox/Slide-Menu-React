@@ -12,8 +12,8 @@ type SlideMenuProps = React.PropsWithChildren<{
   className?: string;
   id?: string;
   style?: React.CSSProperties;
-  onShown?: React.EventHandler<any>,
-  onHidden?: React.EventHandler<any>,
+  onShown?: React.EventHandler<any>;
+  onHidden?: React.EventHandler<any>;
 }>;
 
 export default function SlideMenu({
@@ -27,7 +27,6 @@ export default function SlideMenu({
   zIndex = 2000,
 }: SlideMenuProps) {
   const mainRef = useRef(null);
-  const sensibleAreaRef = useRef(null);
   const menuContainerRef = useRef(null);
   const showStateRef = useRef(false);
 
@@ -51,18 +50,17 @@ export default function SlideMenu({
 
   return (
     <>
-      <div
-        className={styles.slideMenu}
-        ref={mainRef}
-        id={id}
-      >
+      <div className={styles.slideMenu} ref={mainRef} id={id}>
         <div className={styles.menuContainer} ref={menuContainerRef}>
           {children}
         </div>
         <div
           className={styles.sensibleArea}
-          ref={sensibleAreaRef}
-          onTouchStart={generateTouchStartHandler(mainRef, menuContainerRef, menuGeneralOptions)}
+          onTouchStart={generateTouchStartHandler(
+            mainRef,
+            menuContainerRef,
+            menuGeneralOptions,
+          )}
         />
       </div>
     </>
