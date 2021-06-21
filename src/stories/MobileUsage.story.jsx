@@ -13,7 +13,6 @@ export function BasicStory() {
   return (
     <>
       <SlideMenu>
-        <div className="horizontalSpacer" />
         <div className="verticalScrollCreator" />
       </SlideMenu>
     </>
@@ -24,7 +23,6 @@ export function FullWidthMenu() {
   return (
     <>
       <SlideMenu>
-        <div className="horizontalSpacer" />
         <div className="verticalScrollCreator fullWidth" />
       </SlideMenu>
     </>
