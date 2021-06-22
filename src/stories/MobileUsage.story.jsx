@@ -94,3 +94,13 @@ export function BottomBorderMenu() {
     </>
   );
 }
+
+export function TopBorderMenu() {
+  return (
+    <>
+      <SlideMenu border="top">
+        <div className="horizontalScrollCreator" />
+      </SlideMenu>
+    </>
+  );
+}

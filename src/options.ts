@@ -79,6 +79,10 @@ export default class SlideMenuOptions {
       return 'translateY(100%)';
     }
 
+    if (this.border === 'top') {
+      return 'translateY(-100%)';
+    }
+
     return 'translateX(-100%)';
   }
 
@@ -112,6 +116,12 @@ export default class SlideMenuOptions {
     if (this.border === 'bottom') {
       return {
         '--sensible-area-top': 'calc(var(--slide-menu-sensible-area-offset) - var(--slide-menu-sensible-area-height))',
+      };
+    }
+
+    if (this.border === 'top') {
+      return {
+        '--sensible-area-bottom': 'calc(var(--slide-menu-sensible-area-offset) - var(--slide-menu-sensible-area-height))',
       };
     }
 

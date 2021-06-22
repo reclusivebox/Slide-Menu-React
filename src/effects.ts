@@ -105,9 +105,12 @@ function moveMenu(
   if (!options.showStateRef.current) {
     switch (options.border) {
       case 'top':
-        toMove.style.transform = `translateY(calc(-100% + ${
-          currentCoordinates.y - initialCoordinates.y
-        }px))`;
+        toMove.style.transform = `translateY(
+            min(
+              calc(-100% + ${currentCoordinates.y - initialCoordinates.y}px),
+              0px
+            )
+          )`;
         break;
       case 'right':
         toMove.style.transform = `translateX(
@@ -119,10 +122,10 @@ function moveMenu(
         break;
       case 'bottom':
         toMove.style.transform = `translateY(
-          max(
-            calc(100% - ${initialCoordinates.y - currentCoordinates.y}px),
-            0px
-          )
+            max(
+              calc(100% - ${initialCoordinates.y - currentCoordinates.y}px),
+              0px
+            )
           )`;
         break;
       default:
