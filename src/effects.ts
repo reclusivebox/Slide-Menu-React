@@ -1,11 +1,6 @@
 import React from 'react';
 import { SlideMenuShownEvent, SlideMenuHiddenEvent } from './events';
-
-type SlideMenuOptions = {
-  showStateRef: React.MutableRefObject<boolean>;
-  animationDuration?: number;
-  border?: 'top' | 'right' | 'bottom' | 'left';
-};
+import type SlideMenuOptions from './options';
 
 function showCallback(
   slideMenuRef: React.MutableRefObject<null>,
@@ -14,9 +9,7 @@ function showCallback(
   const slideMenu = slideMenuRef.current as unknown as HTMLElement;
   const stateRef = options.showStateRef;
 
-  slideMenu.style.transition = `transform ${
-    options.animationDuration ?? 250
-  }ms`;
+  slideMenu.style.transition = `transform ${options.animationDuration}ms`;
   slideMenu.style.transform = 'translateX(0%)';
 
   slideMenu.addEventListener(
@@ -42,9 +35,7 @@ function hideCallback(
   const slideMenu = slideMenuRef.current as unknown as HTMLElement;
   const stateRef = options.showStateRef;
 
-  slideMenu.style.transition = `transform ${
-    options.animationDuration ?? 250
-  }ms`;
+  slideMenu.style.transition = `transform ${options.animationDuration}ms`;
   slideMenu.style.transform = 'var(--shifting-trnsformation)';
 
   slideMenu.addEventListener(
@@ -90,7 +81,7 @@ function moveMenu(
   const toMove = target.current as unknown as HTMLElement;
 
   if (!options.showStateRef.current) {
-    switch (options.border ?? 'left') {
+    switch (options.border) {
       case 'top':
         toMove.style.transform = `translateY(calc(-100% + ${
           currentCoordinates.y - initialCoordinates.y
@@ -111,7 +102,7 @@ function moveMenu(
         break;
     }
   } else {
-    switch (options.border ?? 'left') {
+    switch (options.border) {
       case 'top':
         toMove.style.transform = `translateY(-${
           initialCoordinates.y - currentCoordinates.y

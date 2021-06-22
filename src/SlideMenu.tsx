@@ -1,7 +1,8 @@
 // eslint-disable-next-line no-use-before-define
 import React, { useRef } from 'react';
 import { useLifeCycleEvents, useOrderEvents } from './hooks';
-import { generateMovementHandler, generateTouchStartHandler } from './effects';
+import { generateTouchStartHandler } from './effects';
+import SlideMenuOptions from './options';
 
 import styles from './styles/SlideMenu.module.scss';
 
@@ -30,7 +31,11 @@ export default function SlideMenu({
   const menuContainerRef = useRef(null);
   const showStateRef = useRef(false);
 
-  const menuGeneralOptions = { showStateRef };
+  const menuGeneralOptions = new SlideMenuOptions({
+    mainRef,
+    showStateRef,
+    menuContainerRef,
+  });
 
   // Component configuration 0: Object setup
   const customVariables: Object = {};
