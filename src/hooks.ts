@@ -43,8 +43,7 @@ export function useToggleEffect(
   }: UseToggleEffectOptions,
 ) {
   const firstThreshold = 0.1 + visibleArea / 100;
-  const secondThreshold =
-    firstThreshold + (1 - firstThreshold) ** (1 + 1 - firstThreshold);
+  const secondThreshold = firstThreshold + (1 - firstThreshold) ** (1 + 1 - firstThreshold);
 
   const activeRef = useRef(false);
 
@@ -53,9 +52,9 @@ export function useToggleEffect(
 
     // showStart
     if (
-      showRatio >= firstThreshold &&
-      showRatio < secondThreshold &&
-      !activeRef.current
+      showRatio >= firstThreshold
+      && showRatio < secondThreshold
+      && !activeRef.current
     ) {
       onShowStart.forEach((callback) => callback());
     }
@@ -68,9 +67,9 @@ export function useToggleEffect(
 
     // hideStart
     else if (
-      showRatio <= secondThreshold &&
-      showRatio > firstThreshold &&
-      activeRef.current
+      showRatio <= secondThreshold
+      && showRatio > firstThreshold
+      && activeRef.current
     ) {
       onHideStart.forEach((callback) => callback());
     }
@@ -142,19 +141,19 @@ export function useLifeCycleEvents(
   }
 }
 
-export function useOrderEvents(targetRef: React.MutableRefObject<null>, options: SlideMenuOptions) {
+export function useOrderEvents(options: SlideMenuOptions) {
   useMobileEffect(() => {
-    const slideMenu = targetRef.current as unknown as HTMLElement;
+    const slideMenu = options.mainRef.current as unknown as HTMLElement;
 
     function enableShowOrder(event: ShowMenuOrderEvent) {
       if ((event.menuId && event.menuId === slideMenu.id) || !event.menuId) {
-        showCallback(targetRef, options);
+        showCallback(options);
       }
     }
 
     function enableHideShowOrder(event: HideMenuOrderEvent) {
       if ((event.menuId && event.menuId === slideMenu.id) || !event.menuId) {
-        hideCallback(targetRef, options);
+        hideCallback(options);
       }
     }
 

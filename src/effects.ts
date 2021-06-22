@@ -3,10 +3,9 @@ import { SlideMenuShownEvent, SlideMenuHiddenEvent } from './events';
 import type SlideMenuOptions from './options';
 
 function showCallback(
-  slideMenuRef: React.MutableRefObject<null>,
   options: SlideMenuOptions,
 ) {
-  const slideMenu = slideMenuRef.current as unknown as HTMLElement;
+  const slideMenu = options.mainRef.current as unknown as HTMLElement;
   const stateRef = options.showStateRef;
 
   slideMenu.style.transition = `transform ${options.animationDuration}ms`;
@@ -29,10 +28,9 @@ function showCallback(
 }
 
 function hideCallback(
-  slideMenuRef: React.MutableRefObject<null>,
   options: SlideMenuOptions,
 ) {
-  const slideMenu = slideMenuRef.current as unknown as HTMLElement;
+  const slideMenu = options.mainRef.current as unknown as HTMLElement;
   const stateRef = options.showStateRef;
 
   slideMenu.style.transition = `transform ${options.animationDuration}ms`;
@@ -55,37 +53,34 @@ function hideCallback(
 }
 
 function generatePositionAjuster(
-  slideMenuRef: React.MutableRefObject<null>,
-  menuContainerRef: React.MutableRefObject<null>,
   options: SlideMenuOptions,
 ) {
   return function positionAjuster(event: TouchEvent) {
     const touch = (event as unknown as TouchEvent).changedTouches[0];
     const distance = touch.clientX;
-    const menuContainer = menuContainerRef.current as unknown as HTMLElement;
+    const menuContainer = options.menuContainerRef.current as unknown as HTMLElement;
 
     if (distance >= menuContainer.offsetWidth / 1.5) {
-      showCallback(slideMenuRef, options);
+      showCallback(options);
     } else {
-      hideCallback(slideMenuRef, options);
+      hideCallback(options);
     }
   };
 }
 
 function moveMenu(
-  target: React.MutableRefObject<null>,
   initialCoordinates: { x: number; y: number },
   currentCoordinates: { x: number; y: number },
   options: SlideMenuOptions,
 ) {
-  const toMove = target.current as unknown as HTMLElement;
+  const toMove = options.mainRef.current as unknown as HTMLElement;
 
   if (!options.showStateRef.current) {
     switch (options.border) {
       case 'top':
         toMove.style.transform = `translateY(calc(-100% + ${
           currentCoordinates.y - initialCoordinates.y
-        }))`;
+        }px))`;
         break;
       case 'right':
         toMove.style.transform = `translateX(calc(100% - ${
@@ -128,7 +123,6 @@ function moveMenu(
 }
 
 function generateMovementHandler(
-  targetRef: React.MutableRefObject<null>,
   initialTouch: Touch,
   options: SlideMenuOptions,
 ) {
@@ -142,20 +136,17 @@ function generateMovementHandler(
       y: event.changedTouches[0].clientY,
     };
 
-    moveMenu(targetRef, initialCoordinates, currentCoordinates, options);
+    moveMenu(initialCoordinates, currentCoordinates, options);
   };
 }
 
 function generateTouchStartHandler(
-  slideMenuRef: React.MutableRefObject<null>,
-  menuContainerRef: React.MutableRefObject<null>,
   options: SlideMenuOptions,
 ) {
   const touchStartHandler: React.EventHandler<any> = (
     firstEvent: TouchEvent,
   ) => {
     const movementHandler = generateMovementHandler(
-      slideMenuRef,
       firstEvent.touches[0],
       options,
     );
@@ -169,7 +160,7 @@ function generateTouchStartHandler(
     // Ajust the position after the scroll
     firstEvent.target?.addEventListener(
       'touchend',
-      generatePositionAjuster(slideMenuRef, menuContainerRef, options) as any,
+      generatePositionAjuster(options) as any,
       { once: true },
     );
   };

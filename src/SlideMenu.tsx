@@ -51,7 +51,7 @@ export default function SlideMenu({
   }
 
   useLifeCycleEvents(mainRef, onShown, onHidden);
-  useOrderEvents(mainRef, menuGeneralOptions);
+  useOrderEvents(menuGeneralOptions);
 
   return (
     <>
@@ -61,11 +61,7 @@ export default function SlideMenu({
         </div>
         <div
           className={styles.sensibleArea}
-          onTouchStart={generateTouchStartHandler(
-            mainRef,
-            menuContainerRef,
-            menuGeneralOptions,
-          )}
+          onTouchStart={generateTouchStartHandler(menuGeneralOptions)}
         />
       </div>
     </>
