@@ -9,7 +9,7 @@ function showCallback(
   const stateRef = options.showStateRef;
 
   slideMenu.style.transition = `transform ${options.animationDuration}ms`;
-  slideMenu.style.transform = 'translateX(0%)';
+  slideMenu.style.transform = 'unset';
 
   slideMenu.addEventListener(
     'transitionend',
@@ -34,7 +34,7 @@ function hideCallback(
   const stateRef = options.showStateRef;
 
   slideMenu.style.transition = `transform ${options.animationDuration}ms`;
-  slideMenu.style.transform = 'var(--shifting-trnsformation)';
+  slideMenu.style.transform = 'var(--shifting-transformation)';
 
   slideMenu.addEventListener(
     'transitionend',
@@ -52,6 +52,7 @@ function hideCallback(
   );
 }
 
+// Fix This
 function generatePositionAjuster(
   options: SlideMenuOptions,
 ) {
@@ -68,6 +69,7 @@ function generatePositionAjuster(
   };
 }
 
+// Add limiter
 function moveMenu(
   initialCoordinates: { x: number; y: number },
   currentCoordinates: { x: number; y: number },

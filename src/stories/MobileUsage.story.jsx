@@ -74,3 +74,13 @@ export function TenPercentVisibleArea() {
     </>
   );
 }
+
+export function RightBorderMenu() {
+  return (
+    <>
+      <SlideMenu border="right">
+        <div className="verticalScrollCreator" />
+      </SlideMenu>
+    </>
+  );
+}

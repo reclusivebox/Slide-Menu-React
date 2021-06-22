@@ -7,8 +7,9 @@ import SlideMenuOptions from './options';
 import styles from './styles/SlideMenu.module.scss';
 
 type SlideMenuProps = React.PropsWithChildren<{
-  visibleArea: number;
-  debug: boolean;
+  debug?: boolean;
+  border?: 'top' | 'right' | 'bottom' | 'left';
+  visibleArea?: string;
   zIndex?: number;
   className?: string;
   id?: string;
@@ -19,13 +20,12 @@ type SlideMenuProps = React.PropsWithChildren<{
 
 export default function SlideMenu({
   children,
-  className,
-  style,
   id,
   onShown,
   onHidden,
-  visibleArea = 0,
-  zIndex = 2000,
+  visibleArea,
+  zIndex,
+  border,
 }: SlideMenuProps) {
   const mainRef = useRef(null);
   const menuContainerRef = useRef(null);
@@ -35,27 +35,22 @@ export default function SlideMenu({
     mainRef,
     showStateRef,
     menuContainerRef,
+    visibleArea,
+    zIndex,
+    border,
   });
-
-  // Component configuration 0: Object setup
-  const customVariables: Object = {};
-
-  // Component configuration 1: z-index
-  Object.assign(customVariables, { '--slide-menu-z-index': zIndex });
-
-  // Component configuration 2: visible area
-  if (visibleArea > 0 && visibleArea <= 100) {
-    Object.assign(customVariables, {
-      '--slide-menu-visible-area': `${visibleArea}vw`,
-    });
-  }
 
   useLifeCycleEvents(mainRef, onShown, onHidden);
   useOrderEvents(menuGeneralOptions);
 
   return (
     <>
-      <div className={styles.slideMenu} ref={mainRef} id={id}>
+      <div
+        className={styles.slideMenu}
+        style={menuGeneralOptions.cssProps as any}
+        ref={mainRef}
+        id={id}
+      >
         <div className={styles.menuContainer} ref={menuContainerRef}>
           {children}
         </div>

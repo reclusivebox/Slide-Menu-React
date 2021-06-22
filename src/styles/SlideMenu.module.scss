@@ -2,18 +2,24 @@
   --slide-menu-z-index: 2000;
   --slide-menu-sensible-area: 4rem;
   --slide-menu-sensible-area-offset: 1rem;
-  --shifting-trnsformation: translateX(-100%);
+  --shifting-transformation: translateX(-100%);
+  --initial-x-position: none;
+  --initial-y-position: none;
+  --sensible-area-top: none;
+  --sensible-area-bottom: none;
+  --sensible-area-left: none;
+  --sensible-area-right: none;
 }
 
 @media screen and (max-width: 576px) {
   .slideMenu {
     position: fixed;
-    height: 100vh;
-    max-width: 100vw;
     z-index: 2000;
     box-sizing: content-box;
 
-    transform: var(--shifting-trnsformation);
+    right: var(--initial-x-position);
+    bottom: var(--initial-y-position);
+    transform: var(--shifting-transformation);
 
     // display things
     display: grid;
@@ -21,19 +27,22 @@
 
     .menuContainer {
       grid-area: menu;
-      height: 100%;
       overflow: auto;
-      max-width: 100vw;
       scrollbar-width: none;
     }
 
     .sensibleArea {
       position: absolute;
-      inset: 0px 0px 0px calc(100% - var(--slide-menu-sensible-area-offset));
-      background-color: red;
+      background-color: rgba(255, 0, 0, 0.5);
       height: 100%;
       width: var(--slide-menu-sensible-area);
       touch-action: none;
+
+      // positioning
+      top: var(--sensible-area-top);
+      right: var(--sensible-area-right);
+      bottom: var(--sensible-area-bottom);
+      left: var(--sensible-area-left);
     }
   }
 }
