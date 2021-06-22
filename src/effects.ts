@@ -139,9 +139,12 @@ function moveMenu(
         }px)`;
         break;
       case 'right':
-        toMove.style.transform = `translateX(${
-          currentCoordinates.x - initialCoordinates.x
-        }px)`;
+        toMove.style.transform = `translateX(
+          max(
+            ${currentCoordinates.x - initialCoordinates.x}px,
+            0px
+          )
+        )`;
         break;
       case 'bottom':
         toMove.style.transform = `translateY(${

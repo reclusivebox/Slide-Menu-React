@@ -15,7 +15,6 @@
   .slideMenu {
     position: fixed;
     z-index: 2000;
-    box-sizing: content-box;
 
     right: var(--initial-x-position);
     bottom: var(--initial-y-position);
@@ -23,12 +22,14 @@
 
     // display things
     display: grid;
-    grid-template: "menu" 100vh / auto;
+    grid-template: "menu" auto / auto;
 
     .menuContainer {
       grid-area: menu;
       overflow: auto;
       scrollbar-width: none;
+      max-height: 100vh;
+      max-width: 100vw;
     }
 
     .sensibleArea {
