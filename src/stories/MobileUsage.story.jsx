@@ -84,3 +84,13 @@ export function RightBorderMenu() {
     </>
   );
 }
+
+export function BottomBorderMenu() {
+  return (
+    <>
+      <SlideMenu border="bottom">
+        <div className="horizontalScrollCreator" />
+      </SlideMenu>
+    </>
+  );
+}

@@ -1,6 +1,7 @@
 :root {
   --slide-menu-z-index: 2000;
-  --slide-menu-sensible-area: 4rem;
+  --slide-menu-sensible-area-width: 4rem;
+  --slide-menu-sensible-area-height: 100%;
   --slide-menu-sensible-area-offset: 1rem;
   --shifting-transformation: translateX(-100%);
   --initial-x-position: none;
@@ -35,8 +36,8 @@
     .sensibleArea {
       position: absolute;
       background-color: rgba(255, 0, 0, 0.5);
-      height: 100%;
-      width: var(--slide-menu-sensible-area);
+      height: var(--slide-menu-sensible-area-height);
+      width: var(--slide-menu-sensible-area-width);
       touch-action: none;
 
       // positioning

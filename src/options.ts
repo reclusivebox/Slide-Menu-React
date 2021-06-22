@@ -8,6 +8,7 @@ type SlideMenuOptionsSchema = {
   border?: 'top' | 'right' | 'bottom' | 'left';
   zIndex?: number,
   visibleArea?: string,
+  sensibleArea?: string,
 };
 
 const defaultValues: {
@@ -15,11 +16,13 @@ const defaultValues: {
   border: 'top' | 'right' | 'bottom' | 'left',
   zIndex: number,
   visibleArea: string,
+  sensibleArea: string,
 } = {
   animationDuration: 250,
   border: 'left',
   zIndex: 2000,
   visibleArea: '0px',
+  sensibleArea: '4rem',
 };
 
 export default class SlideMenuOptions {
@@ -37,6 +40,8 @@ export default class SlideMenuOptions {
 
   public readonly visibleArea: string;
 
+  public readonly sensibleArea: string;
+
   constructor(optionsObject: SlideMenuOptionsSchema) {
     // Mandatory props
     this.showStateRef = optionsObject.showStateRef;
@@ -48,6 +53,7 @@ export default class SlideMenuOptions {
     this.border = optionsObject.border ?? defaultValues.border;
     this.zIndex = optionsObject.zIndex ?? defaultValues.zIndex;
     this.visibleArea = optionsObject.visibleArea ?? defaultValues.visibleArea;
+    this.sensibleArea = optionsObject.sensibleArea ?? defaultValues.sensibleArea;
   }
 
   get cssProps() {
@@ -58,6 +64,7 @@ export default class SlideMenuOptions {
       '--initial-y-position': this.getInitialYPosition(),
       '--initial-x-position': this.getInitialXPosition(),
       ...this.getSensibleAreaPosition(),
+      ...this.getSensibleAreaDimensions(),
       // '--sensible-area-position': this.getSensibleAreaXPosition(),
       // '--sensible-area-y-position': this.getSensibleAreaYPosition(),
     };
@@ -67,34 +74,48 @@ export default class SlideMenuOptions {
     if (this.border === 'right') {
       return 'translateX(100%)';
     }
+
+    if (this.border === 'bottom') {
+      return 'translateY(100%)';
+    }
+
     return 'translateX(-100%)';
+  }
+
+  private getSensibleAreaDimensions() {
+    if (this.border === 'left' || this.border === 'right') {
+      return {
+        '--slide-menu-sensible-area-width': this.sensibleArea,
+        '--slide-menu-sensible-area-height': '100%',
+      };
+    }
+
+    return {
+      '--slide-menu-sensible-area-width': '100%',
+      '--slide-menu-sensible-area-height': this.sensibleArea,
+    };
   }
 
   private getSensibleAreaPosition() {
     if (this.border === 'left') {
-      // return '0px 0px 0px calc(100% - var(--slide-menu-sensible-area-offset))';
       return {
-        '--sensible-area-top': 'unset',
-        '--sensible-area-right': 'unset',
-        '--sensible-area-bottom': 'unset',
         '--sensible-area-left': 'calc(100% - var(--slide-menu-sensible-area-offset))',
       };
     }
 
     if (this.border === 'right') {
-      // return 'calc(-100% + var(--slide-menu-sensible-area-offset))';
       return {
-        '--sensible-area-top': 'unset',
         '--sensible-area-right': 'calc(100% - var(--slide-menu-sensible-area-offset))',
-        '--sensible-area-bottom': 'unset',
-        '--sensible-area-left': 'unset',
+      };
+    }
+
+    if (this.border === 'bottom') {
+      return {
+        '--sensible-area-top': 'calc(var(--slide-menu-sensible-area-offset) - var(--slide-menu-sensible-area-height))',
       };
     }
 
     return {
-      '--sensible-area-top': 'unset',
-      '--sensible-area-right': 'unset',
-      '--sensible-area-bottom': 'unset',
       '--sensible-area-left': 'calc(100% - var(--slide-menu-sensible-area-offset))',
     };
   }
