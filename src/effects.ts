@@ -52,16 +52,42 @@ function hideCallback(
   );
 }
 
-// Fix This
+// Calculates if the menu should be shown after a partial touch, true means show
+function calculateVisibility(element: HTMLElement, touch: Touch, options: SlideMenuOptions) {
+  let distance;
+  let elementSize;
+
+  switch (options.border) {
+    case 'right':
+      distance = window.innerWidth - touch.clientX;
+      elementSize = element.offsetWidth;
+      break;
+    case 'top':
+      distance = touch.clientY;
+      elementSize = element.offsetHeight;
+      break;
+    case 'bottom':
+      distance = window.innerHeight - touch.clientY;
+      elementSize = element.offsetHeight;
+      break;
+    default:
+      distance = touch.clientX;
+      elementSize = element.offsetWidth;
+      break;
+  }
+
+  return distance >= elementSize / 1.5;
+}
+
+// After a partial touch, hides or shows the menu depending on the distance
 function generatePositionAjuster(
   options: SlideMenuOptions,
 ) {
   return function positionAjuster(event: TouchEvent) {
     const touch = (event as unknown as TouchEvent).changedTouches[0];
-    const distance = touch.clientX;
     const menuContainer = options.menuContainerRef.current as unknown as HTMLElement;
 
-    if (distance >= menuContainer.offsetWidth / 1.5) {
+    if (calculateVisibility(menuContainer, touch, options)) {
       showCallback(options);
     } else {
       hideCallback(options);
@@ -69,7 +95,6 @@ function generatePositionAjuster(
   };
 }
 
-// Add limiter
 function moveMenu(
   initialCoordinates: { x: number; y: number },
   currentCoordinates: { x: number; y: number },
@@ -85,9 +110,12 @@ function moveMenu(
         }px))`;
         break;
       case 'right':
-        toMove.style.transform = `translateX(calc(100% - ${
-          initialCoordinates.x - currentCoordinates.x
-        }px))`;
+        toMove.style.transform = `translateX(
+          max(
+            calc(100% - ${initialCoordinates.x - currentCoordinates.x}px),
+            0px
+          )
+        )`;
         break;
       case 'bottom':
         toMove.style.transform = `translateY(calc(100% - ${
@@ -95,7 +123,12 @@ function moveMenu(
         }px))`;
         break;
       default:
-        toMove.style.transform = `translateX(calc(-100% + ${currentCoordinates.x - initialCoordinates.x}px))`;
+        toMove.style.transform = `translateX(
+          min(
+            calc(-100% + ${currentCoordinates.x - initialCoordinates.x}px),
+            0px
+          )
+        )`;
         break;
     }
   } else {
