@@ -104,3 +104,48 @@ export function TopBorderMenu() {
     </>
   );
 }
+
+export function TopAndBottomMenu() {
+  return (
+    <>
+      <SlideMenu border="top">
+        <div className="horizontalScrollCreator" />
+      </SlideMenu>
+      <SlideMenu border="bottom">
+        <div className="horizontalScrollCreator" />
+      </SlideMenu>
+    </>
+  );
+}
+
+export function LeftAndRightMenu() {
+  return (
+    <>
+      <SlideMenu>
+        <div className="verticalScrollCreator" />
+      </SlideMenu>
+      <SlideMenu border="right">
+        <div className="verticalScrollCreator" />
+      </SlideMenu>
+    </>
+  );
+}
+
+export function FourDirectionsMenu() {
+  return (
+    <>
+      <SlideMenu>
+        <div className="verticalScrollCreator" />
+      </SlideMenu>
+      <SlideMenu border="right">
+        <div className="verticalScrollCreator" />
+      </SlideMenu>
+      <SlideMenu border="top">
+        <div className="horizontalScrollCreator" />
+      </SlideMenu>
+      <SlideMenu border="bottom">
+        <div className="horizontalScrollCreator" />
+      </SlideMenu>
+    </>
+  );
+}
