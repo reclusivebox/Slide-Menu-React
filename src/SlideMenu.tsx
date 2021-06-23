@@ -40,6 +40,8 @@ export default function SlideMenu({
   sensibleAreaOffset,
   animationDuration,
   customMediaQuery,
+  className,
+  style,
 }: SlideMenuProps) {
   const mainRef = useRef(null);
   const menuContainerRef = useRef(null);
@@ -83,7 +85,14 @@ export default function SlideMenu({
         ref={mainRef}
         id={id}
       >
-        <div className={styles.menuContainer} ref={menuContainerRef}>
+        <div
+          className={`
+            ${styles.menuContainer}
+            ${className ? ` ${className}` : ''}
+          `}
+          style={style}
+          ref={menuContainerRef}
+        >
           {children}
         </div>
         <div className={styles.sensibleArea} ref={sensibleAreaRef} />
