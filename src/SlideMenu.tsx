@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-use-before-define
 import React, { useRef } from 'react';
-import { useLifeCycleEvents, useOrderEvents } from './hooks';
+import { useLifeCycleEvents, useOrderEvents, useLocalEventWatcher } from './hooks';
 import { generateTouchStartHandler } from './effects';
 import SlideMenuOptions from './options';
 
@@ -36,6 +36,7 @@ export default function SlideMenu({
   const mainRef = useRef(null);
   const menuContainerRef = useRef(null);
   const showStateRef = useRef(false);
+  const sensibleAreaRef = useRef(null);
 
   const menuGeneralOptions = new SlideMenuOptions({
     mainRef,
@@ -51,6 +52,7 @@ export default function SlideMenu({
 
   useLifeCycleEvents(mainRef, onShown, onHidden);
   useOrderEvents(menuGeneralOptions);
+  useLocalEventWatcher(sensibleAreaRef, 'touchstart', generateTouchStartHandler(menuGeneralOptions), true);
 
   return (
     <>
@@ -65,7 +67,7 @@ export default function SlideMenu({
         </div>
         <div
           className={styles.sensibleArea}
-          onTouchStart={generateTouchStartHandler(menuGeneralOptions)}
+          ref={sensibleAreaRef}
         />
       </div>
     </>
