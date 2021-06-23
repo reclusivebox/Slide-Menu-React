@@ -73,11 +73,10 @@ export default class SlideMenuOptions {
       '--slide-menu-z-index': this.zIndex,
       '--slide-menu-visible-area': this.visibleArea,
       '--shifting-transformation': this.getShiftingTransformation(),
-      '--initial-y-position': this.getInitialYPosition(),
-      '--initial-x-position': this.getInitialXPosition(),
       '--slide-menu-sensible-area-offset': this.sensibleAreaOffset,
       ...this.getSensibleAreaPosition(),
       ...this.getSensibleAreaDimensions(),
+      ...this.getInitialPosition(),
     };
   }
 
@@ -141,19 +140,24 @@ export default class SlideMenuOptions {
     };
   }
 
-  private getInitialXPosition() {
+  private getInitialPosition() {
     if (this.border === 'right') {
-      return '0px';
+      return {
+        '--slide-menu-right-position': '0px',
+        '--slide-menu-top-position': '0px',
+      };
     }
 
-    return 'none';
-  }
-
-  private getInitialYPosition() {
     if (this.border === 'bottom') {
-      return '0px';
+      return {
+        '--slide-menu-bottom-position': '0px',
+        '--slide-menu-left-position': '0px',
+      };
     }
 
-    return 'none';
+    return {
+      '--slide-menu-top-position': '0px',
+      '--slide-menu-left-position': '0px',
+    };
   }
 }
