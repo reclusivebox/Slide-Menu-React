@@ -67,7 +67,7 @@ export function NegativeZIndex() {
 export function TenPercentVisibleArea() {
   return (
     <>
-      <SlideMenu visibleArea="10">
+      <SlideMenu visibleArea="10vw">
         <div className="horizontalSpacer" />
         <div className="verticalScrollCreator" />
       </SlideMenu>
@@ -146,6 +146,51 @@ export function FourDirectionsMenu() {
       <SlideMenu border="bottom">
         <div className="horizontalScrollCreator" />
       </SlideMenu>
+    </>
+  );
+}
+
+export function FullHeightTopBorder() {
+  return (
+    <>
+      <SlideMenu border="top">
+        <div className="horizontalScrollCreator" />
+        <div className="verticalScrollCreator" />
+      </SlideMenu>
+    </>
+  );
+}
+
+export function BottomBorderWithVisibleArea() {
+  return (
+    <>
+      <SlideMenu visibleArea="4rem" border="bottom">
+        <div className="horizontalScrollCreator" />
+      </SlideMenu>
+      <div className="verticalScrollCreator" />
+    </>
+  );
+}
+
+export function RightBorderWithVisibleArea() {
+  return (
+    <>
+      <SlideMenu visibleArea="4rem" border="right" sensibleAreaOffset="2rem" sensibleArea="3rem">
+        <div className="horizontalScrollCreator" />
+        <div className="verticalScrollCreator" />
+      </SlideMenu>
+      <div className="verticalScrollCreator" />
+    </>
+  );
+}
+
+export function TopBorderWithVisibleArea() {
+  return (
+    <>
+      <SlideMenu visibleArea="4rem" border="top">
+        <div className="horizontalScrollCreator" />
+      </SlideMenu>
+      <div className="verticalScrollCreator" />
     </>
   );
 }

@@ -107,7 +107,7 @@ function moveMenu(
       case 'top':
         toMove.style.transform = `translateY(
             min(
-              calc(-100% + ${currentCoordinates.y - initialCoordinates.y}px),
+              calc(calc(-100% + var(--slide-menu-visible-area)) + ${currentCoordinates.y - initialCoordinates.y}px),
               0px
             )
           )`;
@@ -115,7 +115,7 @@ function moveMenu(
       case 'right':
         toMove.style.transform = `translateX(
           max(
-            calc(100% - ${initialCoordinates.x - currentCoordinates.x}px),
+            calc(calc(100% - var(--slide-menu-visible-area)) - ${initialCoordinates.x - currentCoordinates.x}px),
             0px
           )
         )`;
@@ -123,7 +123,7 @@ function moveMenu(
       case 'bottom':
         toMove.style.transform = `translateY(
             max(
-              calc(100% - ${initialCoordinates.y - currentCoordinates.y}px),
+              calc(calc(100% - var(--slide-menu-visible-area)) - ${initialCoordinates.y - currentCoordinates.y}px),
               0px
             )
           )`;
@@ -131,7 +131,7 @@ function moveMenu(
       default:
         toMove.style.transform = `translateX(
           min(
-            calc(-100% + ${currentCoordinates.x - initialCoordinates.x}px),
+            calc(calc(-100% + var(--slide-menu-visible-area)) + ${currentCoordinates.x - initialCoordinates.x}px),
             0px
           )
         )`;

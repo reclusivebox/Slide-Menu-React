@@ -9,6 +9,7 @@ type SlideMenuOptionsSchema = {
   zIndex?: number,
   visibleArea?: string,
   sensibleArea?: string,
+  sensibleAreaOffset?: string,
 };
 
 const defaultValues: {
@@ -17,12 +18,14 @@ const defaultValues: {
   zIndex: number,
   visibleArea: string,
   sensibleArea: string,
+  sensibleAreaOffset: string,
 } = {
   animationDuration: 250,
   border: 'left',
   zIndex: 2000,
   visibleArea: '0px',
   sensibleArea: '4rem',
+  sensibleAreaOffset: '1rem',
 };
 
 export default class SlideMenuOptions {
@@ -42,6 +45,8 @@ export default class SlideMenuOptions {
 
   public readonly sensibleArea: string;
 
+  public readonly sensibleAreaOffset: string;
+
   constructor(optionsObject: SlideMenuOptionsSchema) {
     // Mandatory props
     this.showStateRef = optionsObject.showStateRef;
@@ -54,6 +59,7 @@ export default class SlideMenuOptions {
     this.zIndex = optionsObject.zIndex ?? defaultValues.zIndex;
     this.visibleArea = optionsObject.visibleArea ?? defaultValues.visibleArea;
     this.sensibleArea = optionsObject.sensibleArea ?? defaultValues.sensibleArea;
+    this.sensibleAreaOffset = optionsObject.sensibleAreaOffset ?? defaultValues.sensibleAreaOffset;
   }
 
   get cssProps() {
@@ -63,27 +69,26 @@ export default class SlideMenuOptions {
       '--shifting-transformation': this.getShiftingTransformation(),
       '--initial-y-position': this.getInitialYPosition(),
       '--initial-x-position': this.getInitialXPosition(),
+      '--slide-menu-sensible-area-offset': this.sensibleAreaOffset,
       ...this.getSensibleAreaPosition(),
       ...this.getSensibleAreaDimensions(),
-      // '--sensible-area-position': this.getSensibleAreaXPosition(),
-      // '--sensible-area-y-position': this.getSensibleAreaYPosition(),
     };
   }
 
   private getShiftingTransformation() {
     if (this.border === 'right') {
-      return 'translateX(100%)';
+      return 'translateX(calc(100% - var(--slide-menu-visible-area)))';
     }
 
     if (this.border === 'bottom') {
-      return 'translateY(100%)';
+      return 'translateY(calc(100% - var(--slide-menu-visible-area)))';
     }
 
     if (this.border === 'top') {
-      return 'translateY(-100%)';
+      return 'translateY(calc(-100% + var(--slide-menu-visible-area)))';
     }
 
-    return 'translateX(-100%)';
+    return 'translateX(calc(-100% + var(--slide-menu-visible-area)))';
   }
 
   private getSensibleAreaDimensions() {

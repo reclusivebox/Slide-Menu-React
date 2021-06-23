@@ -10,7 +10,10 @@ type SlideMenuProps = React.PropsWithChildren<{
   debug?: boolean;
   border?: 'top' | 'right' | 'bottom' | 'left';
   visibleArea?: string;
+  sensibleArea?: string,
+  sensibleAreaOffset?: string,
   zIndex?: number;
+  animationDuration?: number,
   className?: string;
   id?: string;
   style?: React.CSSProperties;
@@ -26,6 +29,9 @@ export default function SlideMenu({
   visibleArea,
   zIndex,
   border,
+  sensibleArea,
+  sensibleAreaOffset,
+  animationDuration,
 }: SlideMenuProps) {
   const mainRef = useRef(null);
   const menuContainerRef = useRef(null);
@@ -38,6 +44,9 @@ export default function SlideMenu({
     visibleArea,
     zIndex,
     border,
+    sensibleArea,
+    sensibleAreaOffset,
+    animationDuration,
   });
 
   useLifeCycleEvents(mainRef, onShown, onHidden);
