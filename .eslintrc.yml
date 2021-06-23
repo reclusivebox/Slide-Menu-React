@@ -16,7 +16,8 @@ plugins:
 rules: {
   'react/jsx-filename-extension': 'off',
   'max-classes-per-file': 'off',
-  'import/extensions': 'off'
+  'import/extensions': 'off',
+  'import/no-extraneous-dependencies': 'off',
 }
 settings: {
   'import/resolver': {

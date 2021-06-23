@@ -1,0 +1,43 @@
+:root {
+  --slide-menu-top-position: none;
+  --slide-menu-bottom-position: none;
+  --slide-menu-left-position: none;
+  --slide-menu-right-position: none;
+}
+
+.slideMenu {
+  position: fixed;
+  z-index: var(--slide-menu-z-index);
+
+  top: var(--slide-menu-top-position);
+  right: var(--slide-menu-right-position);
+  bottom: var(--slide-menu-bottom-position);
+  left: var(--slide-menu-left-position);
+  transform: var(--shifting-transformation);
+
+  // display things
+  display: grid;
+  grid-template: 'menu' auto / auto;
+
+  .menuContainer {
+    grid-area: menu;
+    overflow: auto;
+    scrollbar-width: none;
+    max-height: 100vh;
+    max-width: 100vw;
+  }
+
+  .sensibleArea {
+    position: absolute;
+    // background-color: rgba(255, 0, 0, 0.5);
+    height: var(--slide-menu-sensible-area-height);
+    width: var(--slide-menu-sensible-area-width);
+    touch-action: none;
+
+    // positioning
+    top: var(--sensible-area-top);
+    right: var(--sensible-area-right);
+    bottom: var(--sensible-area-bottom);
+    left: var(--sensible-area-left);
+  }
+}

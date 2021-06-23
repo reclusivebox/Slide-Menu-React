@@ -2,14 +2,14 @@ import type { MutableRefObject } from 'react';
 
 // Monitored Events: Events the user can plug a callback
 
-class ShowStartEvent extends CustomEvent<{description: string}> {
+class SlideMenuShownEvent extends CustomEvent<{description: string}> {
   constructor() {
-    super('showStart', {
+    super('slideMenuShown', {
       bubbles: true,
       cancelable: false,
       detail: {
         description:
-          'Event fired when the action to display the slide menu is started.',
+          'Event fired when the menu is displayed.',
       },
     });
   }
@@ -19,46 +19,13 @@ class ShowStartEvent extends CustomEvent<{description: string}> {
   }
 }
 
-class ShowEndEvent extends CustomEvent<{description: string}> {
+class SlideMenuHiddenEvent extends CustomEvent<{description: string}> {
   constructor() {
-    super('showEnd', {
+    super('slideMenuHidden', {
       bubbles: true,
       cancelable: false,
       detail: {
-        description: 'Event fired when the slide menu is displayed.',
-      },
-    });
-  }
-
-  get description() {
-    return this.detail.description;
-  }
-}
-
-class HideStartEvent extends CustomEvent<{description: string}> {
-  constructor() {
-    super('hideStart', {
-      bubbles: true,
-      cancelable: false,
-      detail: {
-        description:
-          'Event fired when the action to hide the slide menu is started.',
-      },
-    });
-  }
-
-  get description() {
-    return this.detail.description;
-  }
-}
-
-class HideEndEvent extends CustomEvent<{description: string}> {
-  constructor() {
-    super('hideEnd', {
-      bubbles: true,
-      cancelable: false,
-      detail: {
-        description: 'Event fired when the slide menu is hidden.',
+        description: 'Event fired when the menu is hidden',
       },
     });
   }
@@ -126,16 +93,10 @@ class HideMenuOrderEvent extends CustomEvent<{description: string, id?: string}>
   }
 }
 
-const monitoredEvents = {
-  showStart: ShowStartEvent,
-  showEnd: ShowEndEvent,
-  hideStart: HideStartEvent,
-  hideEnd: HideEndEvent,
-};
-
 export {
-  monitoredEvents,
   dispatcherGenerator,
   HideMenuOrderEvent,
   ShowMenuOrderEvent,
+  SlideMenuShownEvent,
+  SlideMenuHiddenEvent,
 };

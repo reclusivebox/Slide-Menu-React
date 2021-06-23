@@ -25,3 +25,11 @@
     position: relative;
     left: 50px;
 }
+
+.fullWidth {
+    width: 100vw;
+}
+
+body {
+    padding: 0px !important;
+}

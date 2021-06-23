@@ -1,6 +1,4 @@
 .centerContents {
-    width: 90vw;
-    height: 90vh;
     display: grid;
     place-items: center;
 }
