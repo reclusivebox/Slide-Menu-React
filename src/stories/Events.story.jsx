@@ -2,10 +2,10 @@
 // eslint-disable-next-line no-use-before-define
 import React from 'react';
 import { SlideMenu, ShowMenuOrderEvent, HideMenuOrderEvent } from '../../dist/SlideMenu';
-import { Button, Grommet } from 'grommet';
 
 import './mobileUsage.css';
 import './events.css';
+import 'bootstrap/dist/css/bootstrap.css';
 
 export default {
   title: 'Events',
@@ -37,34 +37,34 @@ export function EventCycleLog() {
 
 export function OrderEvents() {
   return (
-    <Grommet plain>
+    <>
       <SlideMenu>
         <div className="centerContents">
-          <Button primary onClick={close()}>Close</Button>
+          <button className="btn btn-primary" type="button" onClick={() => close()}>Close</button>
         </div>
       </SlideMenu>
       <div className="centerContents">
-        <Button primary onClick={open()}>Open</Button>
+        <button className="btn btn-primary" type="button" onClick={open()}>Open</button>
       </div>
-    </Grommet>
+    </>
   );
 }
 
 export function OrderWithIds() {
   return (
-    <Grommet plain>
+    <>
       <SlideMenu id="correctMenu">
         <div className="centerContents">
-          <Button primary onClick={close('correctMenu')}>Close correct menu</Button>
-          <Button primary onClick={close('wrongMenu')}>Close wrong menu</Button>
-          <Button primary onClick={close()}>Close any menu</Button>
+          <button className="btn btn-primary" type="button" onClick={close('correctMenu')}>Close correct menu</button>
+          <button className="btn btn-primary" type="button" onClick={close('wrongMenu')}>Close wrong menu</button>
+          <button className="btn btn-primary" type="button" onClick={close()}>Close any menu</button>
         </div>
       </SlideMenu>
       <div className="centerContents">
-        <Button primary onClick={open('correctMenu')}>Open correct menu</Button>
-        <Button primary onClick={open('wrongMenu')}>Open wrong menu</Button>
-        <Button primary onClick={open()}>Open any menu</Button>
+        <button className="btn btn-primary" type="button" onClick={open('correctMenu')}>Open correct menu</button>
+        <button className="btn btn-primary" type="button" onClick={open('wrongMenu')}>Open wrong menu</button>
+        <button className="btn btn-primary" type="button" onClick={open()}>Open any menu</button>
       </div>
-    </Grommet>
+    </>
   );
 }
