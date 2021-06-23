@@ -202,7 +202,9 @@ function generateTouchStartHandler(
     firstEvent.target?.addEventListener('touchmove', movementHandler as any);
 
     // Remove Handler after movement
-    firstEvent.target?.removeEventListener('touchend', movementHandler as any);
+    firstEvent.target?.addEventListener('touchend', () => {
+      firstEvent.target?.removeEventListener('touchmove', movementHandler as any);
+    }, { once: true });
 
     // Ajust the position after the scroll
     firstEvent.target?.addEventListener(
@@ -220,5 +222,4 @@ export {
   generateTouchStartHandler,
   showCallback,
   hideCallback,
-  SlideMenuOptions,
 };

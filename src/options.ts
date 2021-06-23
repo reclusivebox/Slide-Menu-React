@@ -10,6 +10,7 @@ type SlideMenuOptionsSchema = {
   visibleArea?: string,
   sensibleArea?: string,
   sensibleAreaOffset?: string,
+  customMediaQuery?: string,
 };
 
 const defaultValues: {
@@ -19,6 +20,7 @@ const defaultValues: {
   visibleArea: string,
   sensibleArea: string,
   sensibleAreaOffset: string,
+  customMediaQuery: string,
 } = {
   animationDuration: 250,
   border: 'left',
@@ -26,6 +28,7 @@ const defaultValues: {
   visibleArea: '0px',
   sensibleArea: '4rem',
   sensibleAreaOffset: '1rem',
+  customMediaQuery: 'screen and (max-width: 576px)',
 };
 
 export default class SlideMenuOptions {
@@ -47,6 +50,8 @@ export default class SlideMenuOptions {
 
   public readonly sensibleAreaOffset: string;
 
+  public readonly customMediaQuery: string;
+
   constructor(optionsObject: SlideMenuOptionsSchema) {
     // Mandatory props
     this.showStateRef = optionsObject.showStateRef;
@@ -60,6 +65,7 @@ export default class SlideMenuOptions {
     this.visibleArea = optionsObject.visibleArea ?? defaultValues.visibleArea;
     this.sensibleArea = optionsObject.sensibleArea ?? defaultValues.sensibleArea;
     this.sensibleAreaOffset = optionsObject.sensibleAreaOffset ?? defaultValues.sensibleAreaOffset;
+    this.customMediaQuery = optionsObject.customMediaQuery ?? defaultValues.customMediaQuery;
   }
 
   get cssProps() {

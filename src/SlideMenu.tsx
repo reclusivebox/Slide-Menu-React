@@ -1,19 +1,26 @@
 // eslint-disable-next-line no-use-before-define
 import React, { useRef } from 'react';
-import { useLifeCycleEvents, useOrderEvents, useLocalEventWatcher } from './hooks';
+import {
+  useLifeCycleEvents,
+  useOrderEvents,
+  useLocalEventWatcher,
+  useMediaQueryObserver,
+} from './hooks';
 import { generateTouchStartHandler } from './effects';
 import SlideMenuOptions from './options';
 
-import styles from './styles/SlideMenu.module.scss';
+import mobileStyles from './styles/mobileStyles.module.scss';
+import blockStyles from './styles/blockStyles.module.scss';
 
 type SlideMenuProps = React.PropsWithChildren<{
   debug?: boolean;
   border?: 'top' | 'right' | 'bottom' | 'left';
   visibleArea?: string;
-  sensibleArea?: string,
-  sensibleAreaOffset?: string,
+  sensibleArea?: string;
+  sensibleAreaOffset?: string;
+  customMediaQuery?: string;
   zIndex?: number;
-  animationDuration?: number,
+  animationDuration?: number;
   className?: string;
   id?: string;
   style?: React.CSSProperties;
@@ -32,6 +39,7 @@ export default function SlideMenu({
   sensibleArea,
   sensibleAreaOffset,
   animationDuration,
+  customMediaQuery,
 }: SlideMenuProps) {
   const mainRef = useRef(null);
   const menuContainerRef = useRef(null);
@@ -48,11 +56,24 @@ export default function SlideMenu({
     sensibleArea,
     sensibleAreaOffset,
     animationDuration,
+    customMediaQuery,
   });
 
-  useLifeCycleEvents(mainRef, onShown, onHidden);
+  const styles = useMediaQueryObserver(
+    menuGeneralOptions.customMediaQuery,
+    mobileStyles,
+    blockStyles,
+  );
+
+  useLifeCycleEvents(menuGeneralOptions, onShown, onHidden);
   useOrderEvents(menuGeneralOptions);
-  useLocalEventWatcher(sensibleAreaRef, 'touchstart', generateTouchStartHandler(menuGeneralOptions), true);
+  useLocalEventWatcher(
+    sensibleAreaRef,
+    'touchstart',
+    generateTouchStartHandler(menuGeneralOptions),
+    menuGeneralOptions,
+    true,
+  );
 
   return (
     <>
@@ -65,10 +86,7 @@ export default function SlideMenu({
         <div className={styles.menuContainer} ref={menuContainerRef}>
           {children}
         </div>
-        <div
-          className={styles.sensibleArea}
-          ref={sensibleAreaRef}
-        />
+        <div className={styles.sensibleArea} ref={sensibleAreaRef} />
       </div>
     </>
   );
