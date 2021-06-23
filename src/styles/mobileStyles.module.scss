@@ -1,6 +1,6 @@
 .slideMenu {
   position: fixed;
-  z-index: 2000;
+  z-index: var(--slide-menu-z-index);
 
   right: var(--initial-x-position);
   bottom: var(--initial-y-position);
