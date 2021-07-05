@@ -25,6 +25,7 @@ export default function Backdrop({
   opacity,
 }: BackdropProps) {
   const backdropRef = useRef(null);
+  const activeMenus: React.MutableRefObject<Set<string>> = useRef(new Set());
 
   function menuShownHandler(
     event: React.SyntheticEvent<HTMLElement, SlideMenuShownEvent>,
@@ -32,6 +33,7 @@ export default function Backdrop({
     const backdrop = backdropRef.current as unknown as HTMLElement;
     const menu = event.target as HTMLElement;
     if (!(exclude as string[]).includes(menu.id)) {
+      activeMenus.current.add(menu.id);
       backdrop.style.display = 'block';
       setTimeout(() => {
         backdrop.style.opacity = opacity as string;
@@ -45,11 +47,14 @@ export default function Backdrop({
     const backdrop = backdropRef.current as unknown as HTMLElement;
     const menu = event.target as HTMLElement;
     if (!(exclude as string[]).includes(menu.id)) {
-      backdrop.style.opacity = '0';
-      backdrop.addEventListener('transitionend', (transitionEvent: TransitionEvent) => {
-        const toHide = transitionEvent.target as HTMLElement;
-        toHide.style.display = 'none';
-      }, { once: true });
+      activeMenus.current.delete(menu.id);
+      if (activeMenus.current.size === 0) {
+        backdrop.style.opacity = '0';
+        backdrop.addEventListener('transitionend', (transitionEvent: TransitionEvent) => {
+          const toHide = transitionEvent.target as HTMLElement;
+          toHide.style.display = 'none';
+        }, { once: true });
+      }
     }
   }
 
