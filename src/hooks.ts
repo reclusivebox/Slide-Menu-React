@@ -16,6 +16,25 @@ export function useMediaQueryObserver<T>(
   return state ? onTrue : onFalse;
 }
 
+export type QueryDependentEventOptions = {
+  target: React.MutableRefObject<null>,
+  eventName: string,
+  callback: React.EventHandler<any>,
+  mediaQuery: string,
+};
+export function useQueryDependentEvent(options: QueryDependentEventOptions) {
+  const shouldExecute = useMediaQueryObserver(options.mediaQuery, true, false);
+  if (shouldExecute) {
+    useEffect(() => {
+      const element = options.target.current as unknown as HTMLElement;
+      element.addEventListener(options.eventName, options.callback);
+      return () => {
+        element.removeEventListener(options.eventName, options.callback);
+      };
+    }, []);
+  }
+}
+
 export function useMobileEffect(
   callback: React.EffectCallback,
   options: SlideMenuOptions,
@@ -32,17 +51,19 @@ export function useLocalEventWatcher(
   onlyMobile = false,
 ) {
   if (onlyMobile) {
-    useMobileEffect(() => {
-      const targetElement = target.current as unknown as HTMLElement;
-      targetElement.addEventListener(event, callback);
-      return () => targetElement.removeEventListener(event, callback);
-    }, options);
+    useQueryDependentEvent({
+      target,
+      eventName: event,
+      callback,
+      mediaQuery: options.customMediaQuery,
+    });
   } else {
-    useEffect(() => {
-      const targetElement = target.current as unknown as HTMLElement;
-      targetElement.addEventListener(event, callback);
-      return () => targetElement.removeEventListener(event, callback);
-    }, []);
+    useQueryDependentEvent({
+      target,
+      eventName: event,
+      callback,
+      mediaQuery: 'all',
+    });
   }
 }
 
