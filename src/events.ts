@@ -3,8 +3,10 @@ import type { MutableRefObject } from 'react';
 // Monitored Events: Events the user can plug a callback
 
 class SlideMenuShownEvent extends CustomEvent<{description: string}> {
+  static eventName = 'slideMenuShown';
+
   constructor() {
-    super('slideMenuShown', {
+    super(SlideMenuShownEvent.eventName, {
       bubbles: true,
       cancelable: false,
       detail: {
@@ -20,8 +22,10 @@ class SlideMenuShownEvent extends CustomEvent<{description: string}> {
 }
 
 class SlideMenuHiddenEvent extends CustomEvent<{description: string}> {
+  static eventName = 'slideMenuHidden';
+
   constructor() {
-    super('slideMenuHidden', {
+    super(SlideMenuHiddenEvent.eventName, {
       bubbles: true,
       cancelable: false,
       detail: {
@@ -52,8 +56,10 @@ function dispatcherGenerator<T extends CustomEvent>(
 // Order Events: Events the user will fire to control the menu
 
 class ShowMenuOrderEvent extends CustomEvent<{description: string, id?: string}> {
+  static eventName = 'showMenuOrder';
+
   constructor(id?: string) {
-    super('showMenuOrder', {
+    super(ShowMenuOrderEvent.eventName, {
       bubbles: true,
       cancelable: false,
       detail: {
@@ -73,8 +79,10 @@ class ShowMenuOrderEvent extends CustomEvent<{description: string, id?: string}>
 }
 
 class HideMenuOrderEvent extends CustomEvent<{description: string, id?: string}> {
+  static eventName = 'hideMenuOrder';
+
   constructor(id?: string) {
-    super('hideMenuOrder', {
+    super(HideMenuOrderEvent.eventName, {
       bubbles: true,
       cancelable: false,
       detail: {

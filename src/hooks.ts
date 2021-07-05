@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { showCallback, hideCallback } from './effects';
-import type { HideMenuOrderEvent, ShowMenuOrderEvent } from './events';
+import {
+  HideMenuOrderEvent,
+  ShowMenuOrderEvent,
+  SlideMenuHiddenEvent,
+  SlideMenuShownEvent,
+} from './events';
 import type SlideMenuOptions from './options';
 
 export function useMediaQueryObserver<T>(
@@ -17,10 +22,10 @@ export function useMediaQueryObserver<T>(
 }
 
 export type QueryDependentEventOptions = {
-  target: React.MutableRefObject<null>,
-  eventName: string,
-  callback: React.EventHandler<any>,
-  mediaQuery: string,
+  target: React.MutableRefObject<null>;
+  eventName: string;
+  callback: React.EventHandler<any>;
+  mediaQuery: string;
 };
 export function useQueryDependentEvent(options: QueryDependentEventOptions) {
   const shouldExecute = useMediaQueryObserver(options.mediaQuery, true, false);
@@ -73,11 +78,11 @@ export function useLifeCycleEvents(
   onHidden?: React.EventHandler<any>,
 ) {
   if (onShown) {
-    useLocalEventWatcher(options.mainRef, 'slideMenuShown', onShown, options);
+    useLocalEventWatcher(options.mainRef, SlideMenuShownEvent.eventName, onShown, options);
   }
 
   if (onHidden) {
-    useLocalEventWatcher(options.mainRef, 'slideMenuHidden', onHidden, options);
+    useLocalEventWatcher(options.mainRef, SlideMenuHiddenEvent.eventName, onHidden, options);
   }
 }
 
@@ -97,12 +102,12 @@ export function useOrderEvents(options: SlideMenuOptions) {
       }
     }
 
-    window.addEventListener('showMenuOrder' as any, enableShowOrder);
-    window.addEventListener('hideMenuOrder' as any, enableHideShowOrder);
+    window.addEventListener(ShowMenuOrderEvent.eventName as any, enableShowOrder);
+    window.addEventListener(HideMenuOrderEvent.eventName as any, enableHideShowOrder);
 
     return () => {
-      window.removeEventListener('showMenuOrder' as any, enableShowOrder);
-      window.removeEventListener('hideMenuOrder' as any, enableHideShowOrder);
+      window.removeEventListener(ShowMenuOrderEvent.eventName as any, enableShowOrder);
+      window.removeEventListener(HideMenuOrderEvent.eventName as any, enableHideShowOrder);
     };
   }, options);
 }
