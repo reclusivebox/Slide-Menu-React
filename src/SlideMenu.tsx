@@ -59,6 +59,7 @@ export default function SlideMenu({
     sensibleAreaOffset,
     animationDuration,
     customMediaQuery,
+    id,
   });
 
   const styles = useMediaQueryObserver(
@@ -83,7 +84,7 @@ export default function SlideMenu({
         className={styles.slideMenu}
         style={menuGeneralOptions.cssProps as any}
         ref={mainRef}
-        id={id}
+        id={menuGeneralOptions.id}
       >
         <div
           className={`

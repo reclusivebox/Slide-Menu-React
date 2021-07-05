@@ -1,3 +1,4 @@
+import { v4 as UUID } from 'uuid';
 import type { MutableRefObject } from 'react';
 
 type SlideMenuOptionsSchema = {
@@ -11,6 +12,7 @@ type SlideMenuOptionsSchema = {
   sensibleArea?: string,
   sensibleAreaOffset?: string,
   customMediaQuery?: string,
+  id?: string,
 };
 
 const defaultValues: {
@@ -52,6 +54,8 @@ export default class SlideMenuOptions {
 
   public readonly customMediaQuery: string;
 
+  public readonly id: string;
+
   constructor(optionsObject: SlideMenuOptionsSchema) {
     // Mandatory props
     this.showStateRef = optionsObject.showStateRef;
@@ -66,6 +70,7 @@ export default class SlideMenuOptions {
     this.sensibleArea = optionsObject.sensibleArea ?? defaultValues.sensibleArea;
     this.sensibleAreaOffset = optionsObject.sensibleAreaOffset ?? defaultValues.sensibleAreaOffset;
     this.customMediaQuery = optionsObject.customMediaQuery ?? defaultValues.customMediaQuery;
+    this.id = optionsObject.id ?? UUID();
   }
 
   get cssProps() {
