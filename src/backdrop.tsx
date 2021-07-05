@@ -29,11 +29,12 @@ export default function Backdrop({
   function menuShownHandler(
     event: React.SyntheticEvent<HTMLElement, SlideMenuShownEvent>,
   ) {
-    const target = event.target as HTMLElement;
-    if (!(exclude as string[]).includes(target.id)) {
-      target.style.display = 'block';
+    const backdrop = backdropRef.current as unknown as HTMLElement;
+    const menu = event.target as HTMLElement;
+    if (!(exclude as string[]).includes(menu.id)) {
+      backdrop.style.display = 'block';
       setTimeout(() => {
-        target.style.opacity = opacity as string;
+        backdrop.style.opacity = opacity as string;
       });
     }
   }
@@ -41,10 +42,11 @@ export default function Backdrop({
   function menuHiddenHandler(
     event: React.SyntheticEvent<HTMLElement, SlideMenuHiddenEvent>,
   ) {
-    const target = event.target as HTMLElement;
-    if (!(exclude as string[]).includes(target.id)) {
-      target.style.opacity = '0.1';
-      target.addEventListener('transitionend', (transitionEvent: TransitionEvent) => {
+    const backdrop = backdropRef.current as unknown as HTMLElement;
+    const menu = event.target as HTMLElement;
+    if (!(exclude as string[]).includes(menu.id)) {
+      backdrop.style.opacity = '0';
+      backdrop.addEventListener('transitionend', (transitionEvent: TransitionEvent) => {
         const toHide = transitionEvent.target as HTMLElement;
         toHide.style.display = 'none';
       }, { once: true });
@@ -52,17 +54,19 @@ export default function Backdrop({
   }
 
   useQueryDependentEvent({
-    target: backdropRef,
+    target: window,
     eventName: SlideMenuShownEvent.eventName,
     callback: menuShownHandler,
     mediaQuery: mediaQuery as string,
+    capture: true,
   });
 
   useQueryDependentEvent({
-    target: backdropRef,
+    target: window,
     eventName: SlideMenuHiddenEvent.eventName,
     callback: menuHiddenHandler,
     mediaQuery: mediaQuery as string,
+    capture: true,
   });
 
   return (
