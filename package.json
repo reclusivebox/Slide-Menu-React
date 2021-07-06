@@ -1,10 +1,11 @@
 {
   "name": "slide-menu-react",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A react component to implement the famous slide-from-the-side menu, used in most native mobile applications.",
   "main": "index.js",
   "author": "Bruno Gregório",
   "license": "MIT",
+  "types": "./dist/index.d.ts",
   "private": false,
   "files": [
     "dist/*",
