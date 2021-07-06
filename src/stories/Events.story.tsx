@@ -1,11 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 // eslint-disable-next-line no-use-before-define
 import React from 'react';
-import {
-  SlideMenu,
-  ShowMenuOrderEvent,
-  HideMenuOrderEvent,
-} from '../../dist/SlideMenu';
+import { SlideMenu, ShowMenuOrderEvent, HideMenuOrderEvent } from 'slide-menu-react';
 
 import './mobileUsage.css';
 import './events.css';
@@ -16,11 +12,11 @@ export default {
   component: SlideMenu,
 };
 
-const open = (id) => {
+const open = (id?: string) => {
   console.log('Open Order Event fired');
   return () => document.body.dispatchEvent(new ShowMenuOrderEvent(id));
 };
-const close = (id) => {
+const close = (id?: string) => {
   console.log('Hide Order Event fired');
   return () => document.body.dispatchEvent(new HideMenuOrderEvent(id));
 };

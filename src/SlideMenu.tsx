@@ -28,7 +28,7 @@ type SlideMenuProps = React.PropsWithChildren<{
   onHidden?: React.EventHandler<any>;
 }>;
 
-export default function SlideMenu({
+function SlideMenu({
   children,
   id,
   onShown,
@@ -101,3 +101,5 @@ export default function SlideMenu({
     </>
   );
 }
+
+export { SlideMenu };

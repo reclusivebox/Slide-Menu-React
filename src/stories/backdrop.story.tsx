@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-use-before-define
 import React from 'react';
-import { Backdrop, SlideMenu } from '../../dist/SlideMenu';
+import { Backdrop, SlideMenu } from 'slide-menu-react';
 
 import './mobileUsage.css';
 import 'bootstrap/dist/css/bootstrap.css';

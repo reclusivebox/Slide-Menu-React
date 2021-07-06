@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-use-before-define
 import React from 'react';
-import { SlideMenu } from '../../dist/SlideMenu';
+import { SlideMenu } from 'slide-menu-react';
 
 import './mobileUsage.css';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -250,7 +250,7 @@ export function CustomZIndex() {
           elements on the main body.
         </p>
       </div>
-      <SlideMenu zIndex="o">
+      <SlideMenu zIndex={0}>
         <div className="horizontalSpacer" />
         <div className="verticalScrollCreator" />
       </SlideMenu>

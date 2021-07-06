@@ -18,12 +18,7 @@ const defaultValues = {
   opacity: '0.5',
 };
 
-export default function Backdrop({
-  zIndex,
-  exclude,
-  mediaQuery,
-  opacity,
-}: BackdropProps) {
+function Backdrop({ zIndex, exclude, mediaQuery, opacity }: BackdropProps) {
   const backdropRef = useRef(null);
   const activeMenus: React.MutableRefObject<Set<string>> = useRef(new Set());
 
@@ -50,10 +45,14 @@ export default function Backdrop({
       activeMenus.current.delete(menu.id);
       if (activeMenus.current.size === 0) {
         backdrop.style.opacity = '0';
-        backdrop.addEventListener('transitionend', (transitionEvent: TransitionEvent) => {
-          const toHide = transitionEvent.target as HTMLElement;
-          toHide.style.display = 'none';
-        }, { once: true });
+        backdrop.addEventListener(
+          'transitionend',
+          (transitionEvent: TransitionEvent) => {
+            const toHide = transitionEvent.target as HTMLElement;
+            toHide.style.display = 'none';
+          },
+          { once: true },
+        );
       }
     }
   }
@@ -80,3 +79,4 @@ export default function Backdrop({
 }
 
 Backdrop.defaultProps = defaultValues;
+export { Backdrop };

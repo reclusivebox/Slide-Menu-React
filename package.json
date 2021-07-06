@@ -2,7 +2,7 @@
   "name": "slide-menu-react",
   "version": "0.0.3",
   "description": "A react component to implement the famous slide-from-the-side menu, used in most native mobile applications.",
-  "main": "index.js",
+  "main": "./dist/SlideMenu.js",
   "author": "Bruno Gregório",
   "license": "MIT",
   "types": "./dist/index.d.ts",
@@ -16,6 +16,7 @@
     "@storybook/addon-actions": "^6.2.9",
     "@storybook/addon-essentials": "^6.2.9",
     "@storybook/addon-links": "^6.2.9",
+    "@storybook/preset-typescript": "^3.0.0",
     "@storybook/react": "^6.2.9",
     "@types/react": "^17.0.9",
     "@types/uuid": "^8.3.1",
@@ -38,7 +39,9 @@
     "rollup-plugin-postcss": "^4.0.0",
     "rollup-plugin-typescript2": "^0.30.0",
     "sass": "^1.34.1",
-    "typescript": "^4.3.2"
+    "slide-menu-react": "file:.yalc/slide-menu-react",
+    "typescript": "^4.3.2",
+    "yalc": "^1.0.0-pre.53"
   },
   "dependencies": {
     "react": "^17.0.2",
@@ -49,6 +52,7 @@
     "build": "rollup -c rollup.config.js",
     "clean": "rm dist/*",
     "storybook": "rollup --watch -c rollup.config.js & start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "update": "npx yalc publish && npx yalc update slide-menu-react"
   }
 }

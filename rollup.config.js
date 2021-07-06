@@ -6,9 +6,8 @@ export default {
   input: 'src/index.ts',
   output: {
     file: 'dist/SlideMenu.js',
-    format: 'umd',
+    format: 'es',
     name: 'SlideMenu',
-    exports: 'default',
   },
   plugins: [
     typescript({
