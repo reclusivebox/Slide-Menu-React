@@ -83,3 +83,33 @@ export function excludingAMenu() {
     </>
   );
 }
+
+export function nestedMenus() {
+  return (
+    <>
+      <div className="p-3">
+        <h1>Basic usage</h1>
+        {MobileTestsWarning}
+        <p className="lead">
+          Nested menu and backdrop.
+        </p>
+      </div>
+      <div>
+        <div>
+          <div>
+            <Backdrop />
+          </div>
+        </div>
+      </div>
+      <div>
+        <div>
+          <div>
+            <SlideMenu>
+              <div className="verticalScrollCreator" />
+            </SlideMenu>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
