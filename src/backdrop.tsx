@@ -18,7 +18,9 @@ const defaultValues = {
   opacity: '0.5',
 };
 
-function Backdrop({ zIndex, exclude, mediaQuery, opacity }: BackdropProps) {
+function Backdrop({
+  zIndex, exclude, mediaQuery, opacity,
+}: BackdropProps) {
   const backdropRef = useRef(null);
   const activeMenus: React.MutableRefObject<Set<string>> = useRef(new Set());
 
