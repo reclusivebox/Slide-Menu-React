@@ -95,77 +95,108 @@ function generatePositionAjuster(
   };
 }
 
-function moveMenu(
+// Movement Functions
+
+function moveTopMenu(
   initialCoordinates: { x: number; y: number },
   currentCoordinates: { x: number; y: number },
   options: SlideMenuOptions,
 ) {
   const toMove = options.mainRef.current as unknown as HTMLElement;
 
-  if (!options.showStateRef.current) {
-    switch (options.border) {
-      case 'top':
-        toMove.style.transform = `translateY(
-            min(
-              calc(calc(-100% + var(--slide-menu-visible-area)) + ${currentCoordinates.y - initialCoordinates.y}px),
-              0px
-            )
-          )`;
-        break;
-      case 'right':
-        toMove.style.transform = `translateX(
-          max(
-            calc(calc(100% - var(--slide-menu-visible-area)) - ${initialCoordinates.x - currentCoordinates.x}px),
-            0px
-          )
-        )`;
-        break;
-      case 'bottom':
-        toMove.style.transform = `translateY(
-            max(
-              calc(calc(100% - var(--slide-menu-visible-area)) - ${initialCoordinates.y - currentCoordinates.y}px),
-              0px
-            )
-          )`;
-        break;
-      default:
-        toMove.style.transform = `translateX(
-          min(
-            calc(calc(-100% + var(--slide-menu-visible-area)) + ${currentCoordinates.x - initialCoordinates.x}px),
-            0px
-          )
-        )`;
-        break;
-    }
+  if (options.showStateRef.current) {
+    toMove.style.transform = `translateY(-${
+      initialCoordinates.y - currentCoordinates.y
+    }px)`;
   } else {
-    switch (options.border) {
-      case 'top':
-        toMove.style.transform = `translateY(-${
-          initialCoordinates.y - currentCoordinates.y
-        }px)`;
-        break;
-      case 'right':
-        toMove.style.transform = `translateX(
-          max(
-            ${currentCoordinates.x - initialCoordinates.x}px,
-            0px
-          )
-        )`;
-        break;
-      case 'bottom':
-        toMove.style.transform = `translateY(
-          max(
-            ${currentCoordinates.y - initialCoordinates.y}px,
-            0px
-          )
-        )`;
-        break;
-      default:
-        toMove.style.transform = `translateX(calc(-${
-          initialCoordinates.x - currentCoordinates.x
-        }px))`;
-        break;
-    }
+    toMove.style.transform = `translateY(
+      min(
+        calc(calc(-100% + var(--slide-menu-visible-area)) + ${currentCoordinates.y - initialCoordinates.y}px),
+        0px
+      )
+    )`;
+  }
+}
+
+function moveRightMenu(
+  initialCoordinates: { x: number; y: number },
+  currentCoordinates: { x: number; y: number },
+  options: SlideMenuOptions,
+) {
+  const toMove = options.mainRef.current as unknown as HTMLElement;
+
+  if (options.showStateRef.current) {
+    toMove.style.transform = `translateX(
+      max(
+        ${currentCoordinates.x - initialCoordinates.x}px,
+        0px
+      )
+    )`;
+  } else {
+    toMove.style.transform = `translateX(
+      max(
+        calc(calc(100% - var(--slide-menu-visible-area)) - ${initialCoordinates.x - currentCoordinates.x}px),
+        0px
+      )
+    )`;
+  }
+}
+
+function moveLeftMenu(
+  initialCoordinates: { x: number; y: number },
+  currentCoordinates: { x: number; y: number },
+  options: SlideMenuOptions,
+) {
+  const toMove = options.mainRef.current as unknown as HTMLElement;
+
+  if (options.showStateRef.current) {
+    toMove.style.transform = `translateX(calc(-${
+      initialCoordinates.x - currentCoordinates.x
+    }px))`;
+  } else {
+    toMove.style.transform = `translateX(
+      min(
+        calc(calc(-100% + var(--slide-menu-visible-area)) + ${currentCoordinates.x - initialCoordinates.x}px),
+        0px
+      )
+    )`;
+  }
+}
+
+function moveBottomMenu(
+  initialCoordinates: { x: number; y: number },
+  currentCoordinates: { x: number; y: number },
+  options: SlideMenuOptions,
+) {
+  const toMove = options.mainRef.current as unknown as HTMLElement;
+
+  if (options.showStateRef.current) {
+    toMove.style.transform = `translateY(
+      max(
+        ${currentCoordinates.y - initialCoordinates.y}px,
+        0px
+      )
+    )`;
+  } else {
+    toMove.style.transform = `translateY(
+      max(
+        calc(calc(100% - var(--slide-menu-visible-area)) - ${initialCoordinates.y - currentCoordinates.y}px),
+        0px
+      )
+    )`;
+  }
+}
+
+function getMovementFunction(options: SlideMenuOptions) {
+  switch (options.border) {
+    case 'top':
+      return moveTopMenu;
+    case 'bottom':
+      return moveBottomMenu;
+    case 'right':
+      return moveRightMenu;
+    default:
+      return moveLeftMenu;
   }
 }
 
@@ -173,6 +204,7 @@ function generateMovementHandler(
   initialTouch: Touch,
   options: SlideMenuOptions,
 ) {
+  const movementFunction = getMovementFunction(options);
   return function movementHandler(event: TouchEvent) {
     const initialCoordinates = {
       x: initialTouch.clientX,
@@ -183,7 +215,7 @@ function generateMovementHandler(
       y: event.changedTouches[0].clientY,
     };
 
-    moveMenu(initialCoordinates, currentCoordinates, options);
+    movementFunction(initialCoordinates, currentCoordinates, options);
   };
 }
 

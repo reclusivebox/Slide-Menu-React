@@ -56,6 +56,8 @@ export default class SlideMenuOptions {
 
   public readonly id: string;
 
+  public readonly cssProps: Object;
+
   constructor(optionsObject: SlideMenuOptionsSchema) {
     // Mandatory props
     this.showStateRef = optionsObject.showStateRef;
@@ -71,9 +73,10 @@ export default class SlideMenuOptions {
     this.sensibleAreaOffset = optionsObject.sensibleAreaOffset ?? defaultValues.sensibleAreaOffset;
     this.customMediaQuery = optionsObject.customMediaQuery ?? defaultValues.customMediaQuery;
     this.id = optionsObject.id ?? UUID();
+    this.cssProps = this.generateCSSprops();
   }
 
-  get cssProps() {
+  private generateCSSprops() {
     return {
       '--slide-menu-z-index': this.zIndex,
       '--slide-menu-visible-area': this.visibleArea,
