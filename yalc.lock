@@ -1,9 +1,0 @@
-{
-  "version": "v1",
-  "packages": {
-    "slide-menu-react": {
-      "signature": "355edc824bea28a8de3e68f8b8f87974",
-      "file": true
-    }
-  }
-}
