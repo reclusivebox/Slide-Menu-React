@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-use-before-define
 import React from 'react';
-import { SlideMenu } from 'slide-menu-react';
+import { SlideMenu } from '../../dist/index';
 
 import './blockUsage.css';
 
