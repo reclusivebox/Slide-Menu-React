@@ -65,10 +65,8 @@ function Backdrop({
 
   const closeOrderEmitter: React.EventHandler<any> = (event) => {
     const numberOfExcludedMenus = exclude?.length ?? 0;
-    console.log(`Excluded menus: ${numberOfExcludedMenus}`);
     if (numberOfExcludedMenus < 1) {
       event.target.dispatchEvent(new HideMenuOrderEvent());
-      console.log('Emited event');
     } else {
       activeMenus.current.forEach(
         (id) => {
@@ -77,7 +75,6 @@ function Backdrop({
           }
         },
       );
-      console.log('Exclusion Emited event');
     }
   };
 
