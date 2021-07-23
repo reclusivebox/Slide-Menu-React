@@ -51,7 +51,6 @@
     "build": "rollup -c rollup.config.js",
     "clean": "rm dist/*",
     "storybook": "rollup --watch -c rollup.config.js & start-storybook -p 6006",
-    "build-storybook": "build-storybook",
-    "update": "npx yalc publish && npx yalc update slide-menu-react"
+    "build-storybook": "build-storybook"
   }
 }
