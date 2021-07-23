@@ -5,9 +5,9 @@ import externals from 'rollup-plugin-node-externals';
 export default {
   input: 'src/index.ts',
   output: {
-    file: 'dist/SlideMenu.js',
-    format: 'es',
-    name: 'SlideMenu',
+    file: 'dist/index.js',
+    // format: 'es',
+    // name: 'SlideMenu',
   },
   plugins: [
     typescript({
