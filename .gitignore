@@ -4,3 +4,4 @@ package-lock.json
 dist
 .yalc
 yalc.lock
+yarn-error.log
