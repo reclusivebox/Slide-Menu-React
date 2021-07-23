@@ -2,7 +2,11 @@
 import React, { useRef } from 'react';
 import styles from './styles/backdrop.module.scss';
 import { useQueryDependentEvent } from './hooks';
-import { SlideMenuShownEvent, SlideMenuHiddenEvent } from './events';
+import {
+  SlideMenuShownEvent,
+  SlideMenuHiddenEvent,
+  HideMenuOrderEvent,
+} from './events';
 
 type BackdropProps = {
   exclude?: string[];
@@ -59,6 +63,24 @@ function Backdrop({
     }
   }
 
+  const closeOrderEmitter: React.EventHandler<any> = (event) => {
+    const numberOfExcludedMenus = exclude?.length ?? 0;
+    console.log(`Excluded menus: ${numberOfExcludedMenus}`);
+    if (numberOfExcludedMenus < 1) {
+      event.target.dispatchEvent(new HideMenuOrderEvent());
+      console.log('Emited event');
+    } else {
+      activeMenus.current.forEach(
+        (id) => {
+          if (!exclude?.includes(id)) {
+            event.target.dispatchEvent(new HideMenuOrderEvent(id));
+          }
+        },
+      );
+      console.log('Exclusion Emited event');
+    }
+  };
+
   useQueryDependentEvent({
     target: window,
     eventName: SlideMenuShownEvent.eventName,
@@ -76,7 +98,12 @@ function Backdrop({
   });
 
   return (
-    <div className={styles.backdrop} ref={backdropRef} style={{ zIndex }} />
+    <div
+      className={styles.backdrop}
+      onClick={closeOrderEmitter}
+      ref={backdropRef}
+      style={{ zIndex }}
+    />
   );
 }
 
