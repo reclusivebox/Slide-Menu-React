@@ -18,6 +18,7 @@
   // display things
   display: grid;
   grid-template: 'menu' auto / auto;
+  overflow: visible;
 
   .menuContainer {
     grid-area: menu;
@@ -29,7 +30,7 @@
 
   .sensibleArea {
     position: absolute;
-    // background-color: rgba(255, 0, 0, 0.5);
+    background-color: var(--debug-background);
     height: var(--slide-menu-sensible-area-height);
     width: var(--slide-menu-sensible-area-width);
     touch-action: none;
