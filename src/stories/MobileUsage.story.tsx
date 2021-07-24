@@ -36,6 +36,23 @@ export function BasicStory() {
   );
 }
 
+export function debugMark() {
+  return (
+    <>
+      <div className="p-3 ms-5">
+        <h1>Showing sensible area</h1>
+        {MobileTestsWarning}
+        <p className="lead">
+          Just a simple test, slide from the left border to show the menu.
+        </p>
+      </div>
+      <SlideMenu debug>
+        <div className="verticalScrollCreator" />
+      </SlideMenu>
+    </>
+  );
+}
+
 export function RightBorderMenu() {
   return (
     <>

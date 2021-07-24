@@ -42,6 +42,7 @@ function SlideMenu({
   customMediaQuery,
   className,
   style,
+  debug,
 }: SlideMenuProps) {
   const mainRef = useRef(null);
   const menuContainerRef = useRef(null);
@@ -60,6 +61,7 @@ function SlideMenu({
     animationDuration,
     customMediaQuery,
     id,
+    debug,
   });
 
   const styles = useMediaQueryObserver(

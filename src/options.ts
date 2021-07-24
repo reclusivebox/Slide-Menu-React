@@ -13,6 +13,7 @@ type SlideMenuOptionsSchema = {
   sensibleAreaOffset?: string,
   customMediaQuery?: string,
   id?: string,
+  debug?: boolean,
 };
 
 const defaultValues: {
@@ -23,6 +24,7 @@ const defaultValues: {
   sensibleArea: string,
   sensibleAreaOffset: string,
   customMediaQuery: string,
+  debug: boolean,
 } = {
   animationDuration: 250,
   border: 'left',
@@ -31,6 +33,7 @@ const defaultValues: {
   sensibleArea: '4rem',
   sensibleAreaOffset: '1rem',
   customMediaQuery: 'screen and (max-width: 576px)',
+  debug: false,
 };
 
 export default class SlideMenuOptions {
@@ -58,6 +61,8 @@ export default class SlideMenuOptions {
 
   public readonly cssProps: Object;
 
+  public readonly debug: boolean;
+
   constructor(optionsObject: SlideMenuOptionsSchema) {
     // Mandatory props
     this.showStateRef = optionsObject.showStateRef;
@@ -72,6 +77,7 @@ export default class SlideMenuOptions {
     this.sensibleArea = optionsObject.sensibleArea ?? defaultValues.sensibleArea;
     this.sensibleAreaOffset = optionsObject.sensibleAreaOffset ?? defaultValues.sensibleAreaOffset;
     this.customMediaQuery = optionsObject.customMediaQuery ?? defaultValues.customMediaQuery;
+    this.debug = optionsObject.debug ?? defaultValues.debug;
     this.id = optionsObject.id ?? UUID();
     this.cssProps = this.generateCSSprops();
   }
@@ -82,6 +88,7 @@ export default class SlideMenuOptions {
       '--slide-menu-visible-area': this.visibleArea,
       '--shifting-transformation': this.getShiftingTransformation(),
       '--slide-menu-sensible-area-offset': this.sensibleAreaOffset,
+      '--debug-background': this.debug ? 'red' : 'transparent',
       ...this.getSensibleAreaPosition(),
       ...this.getSensibleAreaDimensions(),
       ...this.getInitialPosition(),
