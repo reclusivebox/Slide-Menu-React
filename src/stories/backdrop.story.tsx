@@ -27,7 +27,8 @@ export function BasicStory() {
         <h1>Basic usage</h1>
         {MobileTestsWarning}
         <p className="lead">
-          Just a simple test, slide from the left border to show the menu with the backdrop.
+          Just a simple test, slide from the left border to show the menu with
+          the backdrop.
         </p>
       </div>
       <SlideMenu>
@@ -46,8 +47,8 @@ export function twoMenus() {
         {MobileTestsWarning}
         <p className="lead">
           This test contains more than one menu. There are two: one hidden on
-          the bottom border and another one hidden on the left border.
-          This test is meant to test the multiple menu behavior of the component.
+          the bottom border and another one hidden on the left border. This test
+          is meant to test the multiple menu behavior of the component.
         </p>
       </div>
       <SlideMenu>
@@ -69,9 +70,9 @@ export function excludingAMenu() {
         {MobileTestsWarning}
         <p className="lead">
           This test contains more than one menu. There are two: one hidden on
-          the bottom border and another one hidden on the left border.
-          This test is meant to test the multiple menu behavior of the component,
-          when one of the menus is explicitly excluded from the backdrop monitoring.
+          the bottom border and another one hidden on the left border. This test
+          is meant to test the multiple menu behavior of the component, when one
+          of the menus is explicitly excluded from the backdrop monitoring.
         </p>
       </div>
       <SlideMenu>
@@ -90,9 +91,7 @@ export function nestedMenus() {
       <div className="p-3">
         <h1>Basic usage</h1>
         {MobileTestsWarning}
-        <p className="lead">
-          Nested menu and backdrop.
-        </p>
+        <p className="lead">Nested menu and backdrop.</p>
       </div>
       <div>
         <div>
@@ -110,6 +109,54 @@ export function nestedMenus() {
           </div>
         </div>
       </div>
+    </>
+  );
+}
+
+export function backropWithContent() {
+  return (
+    <>
+      <Backdrop>
+        <button
+          onClick={() => {
+            window.dispatchEvent(new Event('hideMenuOrder'));
+          }}
+          className="text-white btn btn-light-outline display-1"
+          type="button"
+        >
+          X
+        </button>
+      </Backdrop>
+      <div className="p-3">
+        <h1>Basic usage</h1>
+        {MobileTestsWarning}
+        <p className="lead">
+          Just a simple test, slide from the right border to show the menu with
+          the backdrop.
+        </p>
+      </div>
+      <SlideMenu border="right">
+        <div className="verticalScrollCreator" />
+      </SlideMenu>
+    </>
+  );
+}
+
+export function backropWithCloseOnTouch() {
+  return (
+    <>
+      <Backdrop closeOnTouch />
+      <div className="p-3">
+        <h1>Basic usage</h1>
+        {MobileTestsWarning}
+        <p className="lead">
+          Just a simple test, slide from the right border to show the menu with
+          the backdrop.
+        </p>
+      </div>
+      <SlideMenu border="right">
+        <div className="verticalScrollCreator" />
+      </SlideMenu>
     </>
   );
 }
