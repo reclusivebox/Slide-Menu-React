@@ -8,12 +8,13 @@ import {
   HideMenuOrderEvent,
 } from './events';
 
-type BackdropProps = {
+type BackdropProps = React.PropsWithChildren<{
   exclude?: string[];
   mediaQuery?: string;
   zIndex?: number;
   opacity?: string;
-};
+  closeOnTouch?: boolean;
+}>;
 
 const defaultValues = {
   exclude: [],
@@ -23,7 +24,7 @@ const defaultValues = {
 };
 
 function Backdrop({
-  zIndex, exclude, mediaQuery, opacity,
+  zIndex, exclude, mediaQuery, opacity, children, closeOnTouch,
 }: BackdropProps) {
   const backdropRef = useRef(null);
   const activeMenus: React.MutableRefObject<Set<string>> = useRef(new Set());
@@ -97,10 +98,12 @@ function Backdrop({
   return (
     <div
       className={styles.backdrop}
-      onClick={closeOrderEmitter}
+      onClick={closeOnTouch ? closeOrderEmitter : undefined}
       ref={backdropRef}
       style={{ zIndex }}
-    />
+    >
+      {children ?? ''}
+    </div>
   );
 }
 
