@@ -19,7 +19,7 @@ function showCallback(
 
         if (!stateRef.current) {
           stateRef.current = true;
-          slideMenu.dispatchEvent(new SlideMenuShownEvent());
+          slideMenu.dispatchEvent(SlideMenuShownEvent());
         }
       }
     },
@@ -44,7 +44,7 @@ function hideCallback(
 
         if (stateRef.current) {
           stateRef.current = false;
-          slideMenu.dispatchEvent(new SlideMenuHiddenEvent());
+          slideMenu.dispatchEvent(SlideMenuHiddenEvent());
         }
       }
     },

@@ -14,11 +14,11 @@ export default {
 
 const open = (id?: string) => {
   console.log('Open Order Event fired');
-  return () => document.body.dispatchEvent(new ShowMenuOrderEvent(id));
+  return () => document.body.dispatchEvent(ShowMenuOrderEvent(id));
 };
 const close = (id?: string) => {
   console.log('Hide Order Event fired');
-  return () => document.body.dispatchEvent(new HideMenuOrderEvent(id));
+  return () => document.body.dispatchEvent(HideMenuOrderEvent(id));
 };
 
 const MobileTestsWarning = (

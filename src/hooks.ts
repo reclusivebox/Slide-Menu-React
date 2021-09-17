@@ -105,13 +105,13 @@ export function useOrderEvents(options: SlideMenuOptions) {
   useMobileEffect(() => {
     const slideMenu = options.mainRef.current as unknown as HTMLElement;
 
-    function enableShowOrder(event: ShowMenuOrderEvent) {
+    function enableShowOrder(event: Event & {menuId: string}) {
       if ((event.menuId && event.menuId === slideMenu.id) || !event.menuId) {
         showCallback(options);
       }
     }
 
-    function enableHideShowOrder(event: HideMenuOrderEvent) {
+    function enableHideShowOrder(event: Event & {menuId: string}) {
       if ((event.menuId && event.menuId === slideMenu.id) || !event.menuId) {
         hideCallback(options);
       }

@@ -30,7 +30,7 @@ function Backdrop({
   const activeMenus: React.MutableRefObject<Set<string>> = useRef(new Set());
 
   function menuShownHandler(
-    event: React.SyntheticEvent<HTMLElement, SlideMenuShownEvent>,
+    event: React.SyntheticEvent<HTMLElement, any>,
   ) {
     const backdrop = backdropRef.current as unknown as HTMLElement;
     const menu = event.target as HTMLElement;
@@ -44,7 +44,7 @@ function Backdrop({
   }
 
   function menuHiddenHandler(
-    event: React.SyntheticEvent<HTMLElement, SlideMenuHiddenEvent>,
+    event: React.SyntheticEvent<HTMLElement, typeof SlideMenuHiddenEvent>,
   ) {
     const backdrop = backdropRef.current as unknown as HTMLElement;
     const menu = event.target as HTMLElement;
@@ -67,12 +67,12 @@ function Backdrop({
   const closeOrderEmitter: React.EventHandler<any> = (event) => {
     const numberOfExcludedMenus = exclude?.length ?? 0;
     if (numberOfExcludedMenus < 1) {
-      event.target.dispatchEvent(new HideMenuOrderEvent());
+      event.target.dispatchEvent(HideMenuOrderEvent());
     } else {
       activeMenus.current.forEach(
         (id) => {
           if (!exclude?.includes(id)) {
-            event.target.dispatchEvent(new HideMenuOrderEvent(id));
+            event.target.dispatchEvent(HideMenuOrderEvent(id));
           }
         },
       );
