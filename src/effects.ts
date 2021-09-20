@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { SlideMenuShownEvent, SlideMenuHiddenEvent } from './events';
 import type SlideMenuOptions from './options';
 

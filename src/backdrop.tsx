@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-use-before-define
-import React, { useRef } from 'react';
+import  { useRef } from 'react';
 import styles from './styles/backdrop.module.scss';
 import { useQueryDependentEvent } from './hooks';
 import {

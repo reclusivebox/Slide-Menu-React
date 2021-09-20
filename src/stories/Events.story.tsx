@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 // eslint-disable-next-line no-use-before-define
-import React from 'react';
+
 import { SlideMenu, ShowMenuOrderEvent, HideMenuOrderEvent } from '../../dist/index';
 
 import './mobileUsage.css';
