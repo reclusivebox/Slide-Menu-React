@@ -50,7 +50,7 @@ export function useMobileEffect(
   options: SlideMenuOptions,
 ) {
   const isMobile = useMediaQueryObserver(options.customMediaQuery, true, false);
-  useEffect(callback, [isMobile]);
+  useEffect(callback as any, [isMobile]);
 }
 
 export function useLocalEventWatcher(
